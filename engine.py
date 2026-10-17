@@ -135,7 +135,9 @@ def player_observations(league, game, max_games=5):
                             numeric = float(val)
                             if math.isfinite(numeric) and numeric >= 0:
                                 result.append({'player': who.get('displayName', '?'), 'player_id':str(who.get('id', who.get('displayName','?'))),
-                                               'category': category, 'stat': label, 'value': numeric, 'date': game['date']})
+                                               'category': category, 'stat': label, 'value': numeric, 'date': game['date'],
+                                               'position': (who.get('position') or {}).get('abbreviation', ''),
+                                               'team': team.get('team', {}).get('displayName', '')})
                         except (ValueError, TypeError):
                             pass
         return result
@@ -148,12 +150,12 @@ def rolling_player_projections(games, league, limit_games=8):
     by_key = defaultdict(list)
     for g in historical:
         for entry in player_observations(league, g):
-            by_key[(entry['player_id'], entry['player'], entry['category'], entry['stat'])].append(entry['value'])
+            by_key[(entry['player_id'], entry['player'], entry['category'], entry['stat'], entry.get('position', ''), entry.get('team', ''))].append(entry['value'])
     output = []
-    for (_, name, category, stat), values in by_key.items():
+    for (_, name, category, stat, position, team), values in by_key.items():
         if len(values) < 2:
             continue
         avg = statistics.mean(values)
-        output.append({'Player':name, 'Category':category, 'Stat':stat, 'Recent average':round(avg, 2),
+        output.append({'Player':name, 'Team':team, 'Position':position, 'Category':category, 'Stat':stat, 'Recent average':round(avg, 2),
                        'Sample games':len(values), 'Observed min':min(values), 'Observed max':max(values)})
     return sorted(output, key=lambda r: (-r['Sample games'], r['Player'], r['Stat']))
