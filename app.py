@@ -70,17 +70,37 @@ with t2:
 with t3:
     st.subheader('Observed player statistics')
     st.caption('This module retrieves box scores for up to eight recent completed games per league. Recent averages are NOT predictive probabilities and may reflect very small samples.')
-    if st.button('Load player history (additional API requests)'):
-        with st.spinner('Reading box scores…'):
-            records=get_players(league, tuple(g['id'] for g in finished[-8:]))
+    player_key = f"players_loaded_{league}"
+    if st.button('Load / reload player history (additional API requests)'):
+        st.session_state[player_key] = True
+    if st.session_state.get(player_key, False):
+        with st.spinner('Reading recent box scores…'):
+            records = get_players(league, tuple(g['id'] for g in finished[-8:]))
         if records:
-            frame=pd.DataFrame(records)
-            search=st.text_input('Filter player', '')
-            if search: frame=frame[frame['Player'].str.contains(search, case=False, regex=False)]
+            frame = pd.DataFrame(records)
+            search = st.text_input('Search player by name', key=f'player_search_{league}')
+            categories = sorted(frame['Category'].dropna().unique().tolist())
+            selected_categories = st.multiselect('Stat categories', categories, default=categories, key=f'player_categories_{league}')
+            frame = frame[frame['Category'].isin(selected_categories)]
+            if search:
+                frame = frame[frame['Player'].str.contains(search, case=False, regex=False)]
+            stat_options = sorted(frame['Stat'].dropna().unique().tolist())
+            selected_stat = st.selectbox('Chart statistic', ['All'] + stat_options, key=f'player_stat_{league}')
+            if selected_stat != 'All':
+                frame = frame[frame['Stat'] == selected_stat]
+            col1, col2 = st.columns(2)
+            col1.metric('Players in view', frame['Player'].nunique())
+            col2.metric('Observed player-stat rows', len(frame))
             st.dataframe(frame, hide_index=True, use_container_width=True)
-            st.download_button('Download player averages CSV',frame.to_csv(index=False),'player_observations.csv','text/csv')
+            if not frame.empty:
+                chart = frame.nlargest(15, 'Recent average')[['Player', 'Stat', 'Recent average']].copy()
+                chart['Label'] = chart['Player'] + ' — ' + chart['Stat']
+                st.subheader('Recent averages — top 15 in filtered view')
+                st.bar_chart(chart.set_index('Label')['Recent average'])
+                st.caption('Only compare bars for the same statistic: units differ across categories. These are observed averages, not forecasted totals.')
+            st.download_button('Download filtered player averages CSV', frame.to_csv(index=False), 'player_observations.csv', 'text/csv')
         else:
-            st.info('No box score statistics with at least two appearances were available from the provider for this sample.')
+            st.info('No eligible box score observations were returned. Try again later or select another league.')
 with t4:
     path=Path(__file__).parent/'data'/'history.json'
     history=json.loads(path.read_text()) if path.exists() else []
