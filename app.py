@@ -6,6 +6,7 @@ import pandas as pd
 import streamlit as st
 from streamlit_autorefresh import st_autorefresh
 from engine import LEAGUES, load_games, fit_ratings, predict, calibration_metrics, rolling_player_projections
+from research import roster_snapshot, team_defense_history, quality_summary
 
 st.set_page_config(page_title='Sports Forecast Lab', page_icon='📊', layout='wide')
 st_autorefresh(interval=300_000, key='refresh_interval')
@@ -44,6 +45,11 @@ def get_players(league, event_ids):
     games, _ = get_games(league)
     return rolling_player_projections(games, league, limit_games=30 if league == 'NFL' else 20)
 
+@st.cache_data(ttl=3600, show_spinner=False)
+def get_roster(league, team_id):
+    return roster_snapshot(league, team_id)
+
+
 def show_history(frame, chart_key):
     """A small comparable table and chart for one specific historical stat."""
     if frame.empty:
@@ -80,7 +86,7 @@ c3.metric('Completed games in fetched window',len(finished))
 with st.spinner('Automatically loading player history (initial load may take a moment)…'):
     records = get_players(league, tuple(g['id'] for g in finished[-(30 if league == 'NFL' else 20):]))
 
-t1, t2, t3, t4, t5 = st.tabs(['🏟 Matchups', '📡 Live & Results', '⚾ / 🏈 Player stats', '🏈 Touchdown history', '📈 Accuracy'])
+t1, t2, t3, t4, t5, t6 = st.tabs(['🏟 Matchups', '📡 Live & Results', '⚾ / 🏈 Player stats', '🏈 Touchdown history', '📈 Accuracy', '🔎 Matchup research'])
 
 with t1:
     st.subheader('Upcoming matchups')
@@ -205,6 +211,21 @@ with t5:
     else:
         st.info('No valid pregame forecast/result pairs yet. Accuracy tracking begins as scheduled snapshots accumulate and games finish.')
     if eligible:
+        scored = [r for r in eligible if r.get('actual') in ('home', 'away', 'draw')
+                  and r.get('forecast_created', '') < r.get('date', '')]
+        if scored:
+            plotted = []
+            for r in scored:
+                outcome = max(('home', 'away', 'draw'), key=lambda k: r['probabilities'][k])
+                plotted.append({'Forecast date': r['date'][:10],
+                                'Highest class probability': 100 * r['probabilities'][outcome],
+                                'Correct': int(outcome == r['actual'])})
+            chart_frame = pd.DataFrame(plotted)
+            st.subheader('Historical model performance')
+            st.caption('This chart uses forecasts recorded BEFORE kickoff; in-sample accuracy alone does not establish calibration.')
+            st.bar_chart(chart_frame.groupby('Forecast date', as_index=True)['Correct'].mean() * 100)
+            st.caption('Daily share of highest-probability outcomes that occurred (%). Interpret cautiously when few games were scored.')
+    if eligible:
         st.dataframe(pd.DataFrame([{'Match':r['away']+' @ '+r['home'], 'Forecast made':r['forecast_created'],
           'Home %':round(100*r['probabilities']['home'],1), 'Draw %':round(100*r['probabilities']['draw'],1),
           'Away %':round(100*r['probabilities']['away'],1), 'Actual':r.get('actual') or 'Pending'} for r in eligible[-100:]]),hide_index=True,use_container_width=True)
@@ -212,3 +233,55 @@ with t5:
         st.write('Source: publicly accessible ESPN scoreboard and game-summary endpoints (unofficial; availability and terms can change).')
         for err in errors[:15]: st.code(err)
     st.caption('History file is persisted by the GitHub scheduled collector, not by in-browser refresh. Cloud deploy requires a public or private GitHub repository.')
+
+with t6:
+    st.subheader('Upcoming-match research')
+    st.caption('Team rosters and descriptive defensive histories from public ESPN feeds. Not a player performance prediction.')
+    if not upcoming:
+        st.info('No upcoming fixture is available in this league and date range.')
+    else:
+        labels = [g['away'] + ' @ ' + g['home'] + ' · ' + g['date'][:10] for g in upcoming[:30]]
+        selected = st.selectbox('Choose upcoming matchup', list(range(len(labels))),
+                                format_func=lambda i: labels[i], key='research_' + league)
+        match = upcoming[selected]
+        home_defense = team_defense_history(finished, match['home_id'])
+        away_defense = team_defense_history(finished, match['away_id'])
+        st.markdown('#### Recent team and opponent context')
+        h, a = st.columns(2)
+        with h:
+            st.markdown('**' + match['home'] + ' (home)**')
+            st.metric('Points / goals conceded per game', home_defense['avg_allowed'] if home_defense['avg_allowed'] is not None else 'N/A')
+            st.metric('Points / goals scored per game', home_defense['avg_scored'] if home_defense['avg_scored'] is not None else 'N/A')
+            st.caption(str(home_defense['games']) + ' recent completed games')
+        with a:
+            st.markdown('**' + match['away'] + ' (away)**')
+            st.metric('Points / goals conceded per game', away_defense['avg_allowed'] if away_defense['avg_allowed'] is not None else 'N/A')
+            st.metric('Points / goals scored per game', away_defense['avg_scored'] if away_defense['avg_scored'] is not None else 'N/A')
+            st.caption(str(away_defense['games']) + ' recent completed games')
+        st.caption('These are team scoring averages, not passing/receiving/rushing defense rankings. Opponent strength and game pace are not adjusted.')
+        with st.spinner('Checking team rosters for selected matchup…'):
+            home_roster = get_roster(league, match['home_id'])
+            away_roster = get_roster(league, match['away_id'])
+        st.markdown('#### Current roster lookup')
+        st.caption('Snapshot requested from the public provider. A player absent from the response is not proof they have been traded, released, or ruled out.')
+        for side, snap in [(match['home'], home_roster), (match['away'], away_roster)]:
+            with st.expander(side + ' — roster (' + str(len(snap['players'])) + ' listed)', expanded=False):
+                if snap['verified']:
+                    st.dataframe(pd.DataFrame(snap['players'])[['name', 'position', 'injury_status', 'injury_note']],
+                                 hide_index=True, use_container_width=True)
+                    st.caption('Source: ' + snap['source'] + ' · Fetched: ' + snap['retrieved_utc'][:19] + ' UTC')
+                    notes = [p for p in snap['players'] if p['injury_status'] or p['injury_note']]
+                    if notes:
+                        st.warning(str(len(notes)) + ' roster entries include provider injury annotations. Not a complete injury report.')
+                else:
+                    st.warning(snap['error'] or 'Roster not available from this provider.')
+        checks = quality_summary(records, home_roster, away_roster)
+        st.markdown('#### Information quality')
+        st.dataframe(pd.DataFrame([
+            {'Data source': 'Both team rosters', 'Verified': checks['rosters_verified']},
+            {'Data source': 'Recent team scoring', 'Verified': bool(home_defense['games'] and away_defense['games'])},
+            {'Data source': 'Complete official injury reports', 'Verified': False},
+            {'Data source': 'Recent trades and transactions', 'Verified': False},
+            {'Data source': 'Projected snap counts / playing time', 'Verified': False},
+        ]), hide_index=True, use_container_width=True)
+        st.info('Full injury-report verification, transactions, confirmed starters, and defensive position-specific rankings require separately licensed or official feeds. Their absence is never treated as a clean bill of health.')
