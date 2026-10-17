@@ -29,9 +29,9 @@ st.markdown('<div class="hero"><h1>🏈 NFL Forecast Lab</h1><p>Upcoming NFL mat
 
 @st.cache_data(ttl=900, show_spinner=False)
 def retrieve():
-    # 75 days captures most of the current NFL season in October.
-    # Fetch only game days, and never claim missing older games are present.
-    return load_games("NFL", before=75, after=14)
+    # 48 days captures the current early-season NFL sample in October.
+    # Public endpoints may be slow; cache all retrieved games for 15 minutes.
+    return load_games("NFL", before=48, after=14)
 
 st.sidebar.header("NFL research")
 st.sidebar.caption("Upcoming games only. Refreshes every 15 minutes while this page is open.")
