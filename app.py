@@ -75,6 +75,11 @@ c1.metric('Upcoming fixtures', len(upcoming))
 c2.metric('Live games', len(live))
 c3.metric('Completed games in fetched window',len(finished))
 
+# Retrieve recent observed player data automatically once per selected league.
+# Streamlit tabs share cached records so changing tabs makes no extra requests.
+with st.spinner('Automatically loading player history (initial load may take a moment)…'):
+    records = get_players(league, tuple(g['id'] for g in finished[-(30 if league == 'NFL' else 20):]))
+
 t1, t2, t3, t4, t5 = st.tabs(['🏟 Matchups', '📡 Live & Results', '⚾ / 🏈 Player stats', '🏈 Touchdown history', '📈 Accuracy'])
 
 with t1:
@@ -111,59 +116,46 @@ with t2:
 
 with t3:
     st.subheader('Player performance explorer')
-    st.caption('Observed box-score averages from recent completed games (up to 30 NFL / 20 other games across the league). One-game observations are labeled. Not player projections.')
-    player_key = f"players_loaded_{league}"
-    if st.button('Load / refresh player history', key=f'load_{league}'):
-        st.session_state[player_key] = True
-        get_players.clear()
-    if st.session_state.get(player_key, False):
-        with st.spinner('Retrieving historical player statistics…'):
-            records = get_players(league, tuple(g['id'] for g in finished[-(30 if league == 'NFL' else 20):]))
-        if records:
-            frame = pd.DataFrame(records)
-            frame['Stat upper'] = frame['Stat'].astype(str).str.upper().str.strip()
-            frame['Position'] = frame['Position'].fillna('').astype(str).str.upper().str.strip()
-            frame['Category lower'] = frame['Category'].astype(str).str.lower()
-            search = st.text_input('Search player', key=f'search_{league}')
-            if search:
-                frame = frame[frame['Player'].str.contains(search, case=False, regex=False)]
-            if league == 'MLB':
-                categories = [('Hits', ['H']), ('Runs', ['R']), ('RBI', ['RBI']), ('Home runs', ['HR'])]
-                for label, codes in categories:
-                    st.markdown('#### ' + label + ' — observed averages')
-                    selection = frame[frame['Stat upper'].isin(codes) & frame['Category lower'].str.contains('bat', na=False)]
-                    show_history(selection, f'mlb_{label}')
-            elif league == 'NFL':
-                for title, position, section, codes in [
-                    ('Quarterbacks · passing', ['QB', 'Q'], 'pass', ['YDS', 'PASS YDS']),
-                    ('Wide receivers · receiving', ['WR'], 'receiv', ['YDS', 'REC YDS']),
-                    ('Tight ends · receiving', ['TE'], 'receiv', ['YDS', 'REC YDS']),
-                    ('Running backs · rushing', ['RB', 'HB', 'FB'], 'rush', ['YDS', 'RUSH YDS'])]:
-                    st.markdown('#### ' + title + ' — observed yards')
-                    selection = frame[frame['Position'].isin(position) &
-                                      frame['Category lower'].str.contains(section, na=False) &
-                                      frame['Stat upper'].isin(codes)]
-                    show_history(selection, f'nfl_{title}')
-                st.markdown('#### Other NFL player observations')
-                st.caption('If your data provider omits a position or uses a different stat label, those entries remain visible below.')
-                st.dataframe(frame[['Player', 'Team', 'Position', 'Category', 'Stat', 'Recent average', 'Sample games']].sort_values('Sample games', ascending=False).head(150), hide_index=True, use_container_width=True)
-            else:
-                st.markdown('#### Soccer · observed player statistics')
-                stat_filter = st.selectbox('Statistic', sorted(frame['Stat'].unique()), key='soccer_stats')
-                show_history(frame[frame['Stat'] == stat_filter], 'soccer')
+    st.caption('Automatically loaded historical box-score averages (30 NFL / 20 other recent league games). Cached up to one hour; not player projections.')
+    if records:
+        frame = pd.DataFrame(records)
+        frame['Stat upper'] = frame['Stat'].astype(str).str.upper().str.strip()
+        frame['Position'] = frame['Position'].fillna('').astype(str).str.upper().str.strip()
+        frame['Category lower'] = frame['Category'].astype(str).str.lower()
+        search = st.text_input('Search player', key=f'search_{league}')
+        if search:
+            frame = frame[frame['Player'].str.contains(search, case=False, regex=False)]
+        if league == 'MLB':
+            categories = [('Hits', ['H']), ('Runs', ['R']), ('RBI', ['RBI']), ('Home runs', ['HR'])]
+            for label, codes in categories:
+                st.markdown('#### ' + label + ' — observed averages')
+                selection = frame[frame['Stat upper'].isin(codes) & frame['Category lower'].str.contains('bat', na=False)]
+                show_history(selection, f'mlb_{label}')
+        elif league == 'NFL':
+            for title, position, section, codes in [
+                ('Quarterbacks · passing', ['QB', 'Q'], 'pass', ['YDS', 'PASS YDS']),
+                ('Wide receivers · receiving', ['WR'], 'receiv', ['YDS', 'REC YDS']),
+                ('Tight ends · receiving', ['TE'], 'receiv', ['YDS', 'REC YDS']),
+                ('Running backs · rushing', ['RB', 'HB', 'FB'], 'rush', ['YDS', 'RUSH YDS'])]:
+                st.markdown('#### ' + title + ' — observed yards')
+                selection = frame[frame['Position'].isin(position) &
+                                  frame['Category lower'].str.contains(section, na=False) &
+                                  frame['Stat upper'].isin(codes)]
+                show_history(selection, f'nfl_{title}')
+            st.markdown('#### Other NFL player observations')
+            st.caption('If your data provider omits a position or uses a different stat label, those entries remain visible below.')
+            st.dataframe(frame[['Player', 'Team', 'Position', 'Category', 'Stat', 'Recent average', 'Sample games']].sort_values('Sample games', ascending=False).head(150), hide_index=True, use_container_width=True)
         else:
-            st.info('The public feed did not return enough box-score history. Try another league or check back later.')
+            st.markdown('#### Soccer · observed player statistics')
+            stat_filter = st.selectbox('Statistic', sorted(frame['Stat'].unique()), key='soccer_stats')
+            show_history(frame[frame['Stat'] == stat_filter], 'soccer')
     else:
-        st.info('Click “Load / refresh player history” to fetch player data.')
-
+        st.info('Player data is currently unavailable from the public feed. Please retry later.')
 with t4:
     st.subheader('Touchdown performance history')
     if league != 'NFL':
         st.info('Choose NFL in the left sidebar to view historical touchdown statistics.')
-    elif not st.session_state.get('players_loaded_NFL', False):
-        st.info('First load NFL player history in the Player stats tab.')
     else:
-        records = get_players(league, tuple(g['id'] for g in finished[-(30 if league == 'NFL' else 20):]))
         frame = pd.DataFrame(records)
         if frame.empty:
             st.info('No player records available.')
