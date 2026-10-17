@@ -1,5 +1,6 @@
 """A single-purpose NFL upcoming-game research dashboard."""
 import datetime as dt
+import json
 import pandas as pd
 import streamlit as st
 from streamlit_autorefresh import st_autorefresh
@@ -121,8 +122,8 @@ with game_tab:
         st.caption("Ties are excluded from the historical check; the binary model does not separately predict ties.")
     
 @st.cache_data(ttl=3600, show_spinner=False)
-def get_touchdown_history(games, team_id, team_name):
-    return summarize_touchdowns(list(games), team_id, team_name, limit=6)
+def get_touchdown_history(games_json, team_id, team_name):
+    return summarize_touchdowns(json.loads(games_json), team_id, team_name, limit=6)
 
 with touchdown_tab:
     st.subheader("Touchdown history by upcoming matchup")
@@ -141,7 +142,7 @@ with touchdown_tab:
                 st.markdown("#### " + name)
                 with st.spinner("Loading recent touchdown records…"):
                     # Cache data per team and historical fixture set.
-                    summary = get_touchdown_history(tuple(completed), team_id, name)
+                    summary = get_touchdown_history(json.dumps(completed, sort_keys=True), team_id, name)
                 if summary["missing_games"]:
                     st.warning(f"{summary['missing_games']} of {summary['games_requested']} recent games lacked usable team box-score data.")
                 st.caption(f"Last {summary['games_requested']} completed team games requested")
