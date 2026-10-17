@@ -150,8 +150,6 @@ with t3:
             stat_filter = st.selectbox('Statistic', sorted(frame['Stat'].unique()), key='soccer_stats')
             show_history(frame[frame['Stat'] == stat_filter], 'soccer')
     else:
-        st.info('The public feed did not return enough box-score history. Try another league or check back later.')
-    else:
         st.info('Player data is currently unavailable from the public feed. Please retry later.')
 with t4:
     st.subheader('Touchdown performance history')
