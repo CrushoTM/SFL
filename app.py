@@ -5,6 +5,7 @@ import streamlit as st
 from streamlit_autorefresh import st_autorefresh
 from engine import load_games
 from nfl_model import forecast, rolling_validation
+from touchdown_history import summarize_touchdowns
 
 st.set_page_config(page_title="NFL Forecast Lab", page_icon="🏈", layout="wide")
 st_autorefresh(interval=900_000, key="nfl_refresh")
@@ -58,60 +59,95 @@ c3.metric("Data coverage", "Partial" if errors else "Loaded")
 st.caption("Source: public ESPN NFL schedule and results. Updated on request or every 15 minutes while open. Missing provider days: " + str(len(errors)))
 st.info("Model win shares are experimental estimates, NOT calibrated confidence levels. Offense and defense are approximated by points scored/allowed. Injuries, confirmed starters, transactions and position-specific defensive ratings have not been verified and are NOT part of this model.")
 
-if not upcoming:
-    st.info("There are no upcoming games in the next 14 days returned by this feed. This can happen during breaks or provider outages.")
-else:
-    forecasts = [(g, forecast(g, completed)) for g in upcoming]
-    display = st.radio("Show matchups", ["All upcoming", "Next 7 days"], horizontal=True)
-    if display == "Next 7 days":
-        deadline = now + dt.timedelta(days=7)
-        forecasts = [(g,p) for g,p in forecasts if dt.datetime.fromisoformat(g["date"].replace("Z","+00:00")) <= deadline]
-    st.markdown("### Upcoming matchups")
-    if not forecasts:
-        st.caption("No upcoming fixtures in this date range.")
-    for game, pred in forecasts:
-        with st.container(border=True):
-            kickoff = dt.datetime.fromisoformat(game["date"].replace("Z","+00:00"))
-            st.caption(kickoff.strftime("%a %b %d · %I:%M %p UTC") + " · Pre-game")
-            left, sep, right = st.columns([5, 1, 5], vertical_alignment="center")
-            with left:
-                st.markdown("### " + game["away"])
-            with sep:
-                st.markdown("**@**")
-            with right:
-                st.markdown("### " + game["home"])
-            st.markdown("**Model favorite: " + pred["winner"] + "**")
-            home_col, away_col = st.columns(2)
-            home_col.metric(game["home"] + " · experimental win share", f'{pred["home_probability"] * 100:.1f}%')
-            away_col.metric(game["away"] + " · experimental win share", f'{pred["away_probability"] * 100:.1f}%')
-            st.progress(pred["home_probability"], text="Home-team model share")
-            if pred["sample_games_min"] < 3:
-                st.warning("Very small recent sample. Treat the model estimate as low-information.")
-            with st.expander("Why does the model lean this way?"):
-                st.caption("Numbers below are points per game from completed games, smoothed toward 22.0 when samples are small.")
-                stats = pd.DataFrame([
-                    {"Team": game["away"], "Games": pred["away"]["games"],
-                     "Offense · pts/game": pred["away"]["offense_ppg"],
-                     "Defense · pts allowed/game": pred["away"]["allowed_ppg"],
-                     "Recent average point margin": pred["away"]["recent_margin"]},
-                    {"Team": game["home"], "Games": pred["home"]["games"],
-                     "Offense · pts/game": pred["home"]["offense_ppg"],
-                     "Defense · pts allowed/game": pred["home"]["allowed_ppg"],
-                     "Recent average point margin": pred["home"]["recent_margin"]},
-                ])
-                st.dataframe(stats, hide_index=True, use_container_width=True)
-                st.write("Model factors: offensive scoring versus opposing points allowed, past-results Elo, recent point margins, and fixed home-field adjustment.")
-                st.caption("Unavailable inputs: official injury status, trades, confirmed active starters, offensive/defensive efficiency per play, turnovers, opponent-adjusted efficiency. No assertions are made about their impact.")
+game_tab, touchdown_tab = st.tabs(["🏈 Upcoming games", "📊 Touchdown history"])
 
-with st.expander("Model methodology and historical check"):
-    st.write("Each team receives smoothed offense/defense ratings using completed NFL points scored and allowed. A transparent, fixed-weight model combines these with previous-game Elo, four-game form, and home advantage. These weights are heuristic, not learned from a validated training set.")
-    validation = rolling_validation(completed)
-    if validation:
-        a,b,c = st.columns(3)
-        a.metric("Historical checks", validation["games"])
-        b.metric("Correct favorites", f'{100 * validation["winner_accuracy"]:.1f}%')
-        c.metric("Brier score · lower is better", f'{validation["brier"]:.3f}')
-        st.caption("Sequential retrospective check with 16 prior completed games minimum. It is NOT an independent holdout or proof of predictive validity.")
+with game_tab:
+    if not upcoming:
+        st.info("There are no upcoming games in the next 14 days returned by this feed. This can happen during breaks or provider outages.")
     else:
-        st.caption("Insufficient completed games for the chronological check.")
-    st.caption("Ties are excluded from the historical check; the binary model does not separately predict ties.")
+        forecasts = [(g, forecast(g, completed)) for g in upcoming]
+        display = st.radio("Show matchups", ["All upcoming", "Next 7 days"], horizontal=True)
+        if display == "Next 7 days":
+            deadline = now + dt.timedelta(days=7)
+            forecasts = [(g,p) for g,p in forecasts if dt.datetime.fromisoformat(g["date"].replace("Z","+00:00")) <= deadline]
+        st.markdown("### Upcoming matchups")
+        if not forecasts:
+            st.caption("No upcoming fixtures in this date range.")
+        for game, pred in forecasts:
+            with st.container(border=True):
+                kickoff = dt.datetime.fromisoformat(game["date"].replace("Z","+00:00"))
+                st.caption(kickoff.strftime("%a %b %d · %I:%M %p UTC") + " · Pre-game")
+                left, sep, right = st.columns([5, 1, 5], vertical_alignment="center")
+                with left:
+                    st.markdown("### " + game["away"])
+                with sep:
+                    st.markdown("**@**")
+                with right:
+                    st.markdown("### " + game["home"])
+                st.markdown("**Model favorite: " + pred["winner"] + "**")
+                home_col, away_col = st.columns(2)
+                home_col.metric(game["home"] + " · experimental win share", f'{pred["home_probability"] * 100:.1f}%')
+                away_col.metric(game["away"] + " · experimental win share", f'{pred["away_probability"] * 100:.1f}%')
+                st.progress(pred["home_probability"], text="Home-team model share")
+                if pred["sample_games_min"] < 3:
+                    st.warning("Very small recent sample. Treat the model estimate as low-information.")
+                with st.expander("Why does the model lean this way?"):
+                    st.caption("Numbers below are points per game from completed games, smoothed toward 22.0 when samples are small.")
+                    stats = pd.DataFrame([
+                        {"Team": game["away"], "Games": pred["away"]["games"],
+                         "Offense · pts/game": pred["away"]["offense_ppg"],
+                         "Defense · pts allowed/game": pred["away"]["allowed_ppg"],
+                         "Recent average point margin": pred["away"]["recent_margin"]},
+                        {"Team": game["home"], "Games": pred["home"]["games"],
+                         "Offense · pts/game": pred["home"]["offense_ppg"],
+                         "Defense · pts allowed/game": pred["home"]["allowed_ppg"],
+                         "Recent average point margin": pred["home"]["recent_margin"]},
+                    ])
+                    st.dataframe(stats, hide_index=True, use_container_width=True)
+                    st.write("Model factors: offensive scoring versus opposing points allowed, past-results Elo, recent point margins, and fixed home-field adjustment.")
+                    st.caption("Unavailable inputs: official injury status, trades, confirmed active starters, offensive/defensive efficiency per play, turnovers, opponent-adjusted efficiency. No assertions are made about their impact.")
+    
+    with st.expander("Model methodology and historical check"):
+        st.write("Each team receives smoothed offense/defense ratings using completed NFL points scored and allowed. A transparent, fixed-weight model combines these with previous-game Elo, four-game form, and home advantage. These weights are heuristic, not learned from a validated training set.")
+        validation = rolling_validation(completed)
+        if validation:
+            a,b,c = st.columns(3)
+            a.metric("Historical checks", validation["games"])
+            b.metric("Correct favorites", f'{100 * validation["winner_accuracy"]:.1f}%')
+            c.metric("Brier score · lower is better", f'{validation["brier"]:.3f}')
+            st.caption("Sequential retrospective check with 16 prior completed games minimum. It is NOT an independent holdout or proof of predictive validity.")
+        else:
+            st.caption("Insufficient completed games for the chronological check.")
+        st.caption("Ties are excluded from the historical check; the binary model does not separately predict ties.")
+    
+@st.cache_data(ttl=3600, show_spinner=False)
+def get_touchdown_history(games, team_id, team_name):
+    return summarize_touchdowns(list(games), team_id, team_name, limit=6)
+
+with touchdown_tab:
+    st.subheader("Touchdown history by upcoming matchup")
+    st.caption("Completed-game rushing and receiving touchdowns from public box scores. No future TD scorer picks or 1+/2+ probabilities.")
+    if not upcoming:
+        st.info("No upcoming games to select.")
+    else:
+        options = [g["away"] + " @ " + g["home"] + " · " + g["date"][:10] for g in upcoming]
+        choice = st.selectbox("Choose a scheduled NFL matchup", range(len(options)),
+                              format_func=lambda index: options[index], key="td_matchup")
+        match = upcoming[choice]
+        cols = st.columns(2)
+        for col, team_id, name in ((cols[0], match["away_id"], match["away"]),
+                                   (cols[1], match["home_id"], match["home"])):
+            with col:
+                st.markdown("#### " + name)
+                with st.spinner("Loading recent touchdown records…"):
+                    # Cache data per team and historical fixture set.
+                    summary = get_touchdown_history(tuple(completed), team_id, name)
+                if summary["missing_games"]:
+                    st.warning(f"{summary['missing_games']} of {summary['games_requested']} recent games lacked usable team box-score data.")
+                st.caption(f"Last {summary['games_requested']} completed team games requested")
+                if summary["rows"]:
+                    st.dataframe(pd.DataFrame(summary["rows"]), use_container_width=True,
+                                 hide_index=True)
+                else:
+                    st.info("No rushing or receiving touchdown records were available for this team in the sampled games.")
+        st.caption("Players shown were recorded in previous games. This does not confirm active status, injuries or expected playing time for the upcoming matchup.")
