@@ -156,38 +156,78 @@ def load_player_td_projections(match_json, completed_json):
     return player_td_projection(json.loads(match_json), json.loads(completed_json))
 
 with player_tab:
-    st.subheader("Upcoming player touchdown projections")
-    st.caption("Experimental expected OFFENSIVE touchdown equivalents for the NEXT game, informed by team scoring, opponent points allowed and players' sampled rushing/receiving touchdown involvement. These are forward estimates, not past totals.")
-    st.warning("Player availability and injuries are NOT confirmed. Roster presence does not mean active game-day status. Values are uncalibrated scoring allocations, not 1+ TD or 2+ TD likelihoods.")
+    st.subheader("NFL player touchdown projections · daily view")
+    st.caption("One table for all upcoming games on the selected day. Expected offensive TD equivalents are experimental allocations, not the probability a player scores.")
+    st.warning("Injury status, active lineups, trades and participation are not verified. These numbers are uncalibrated; they are not a ranking of recommended touchdown scorers.")
     if not upcoming:
-        st.info("No upcoming NFL matchup is available in the current schedule window.")
+        st.info("No upcoming NFL games are currently available.")
     else:
-        labels = [g["away"] + " @ " + g["home"] + " · " + g["date"][:10] for g in upcoming]
-        idx = st.selectbox("Upcoming matchup", list(range(len(labels))),
-                           format_func=lambda i: labels[i], key="player_td_game")
-        match = upcoming[idx]
-        st.markdown("### " + match["away"] + " @ " + match["home"])
-        with st.spinner("Checking recent player involvement and roster snapshots…"):
-            result = load_player_td_projections(json.dumps(match, sort_keys=True),
-                                                json.dumps(completed, sort_keys=True))
-        for side in ("away", "home"):
-            team = result[side]
-            st.markdown("#### " + team["team"])
-            st.caption(f'Team projected TD equivalents: {team["total_expected_tds"]:.2f} · '
-                       f'{team["boxscore_games"]} historical games checked')
-            if team["missing_games"]:
-                st.warning(f'{team["missing_games"]} selected game(s) had no usable player stats for this team.')
-            if not team["roster_verified"]:
-                st.warning("Current roster could not be verified; listed players may have changed teams. "
-                           + (team["roster_error"] or ""))
-            if team["rows"]:
-                frame = pd.DataFrame(team["rows"])
-                st.dataframe(frame, hide_index=True, use_container_width=True,
-                             column_config={"Projected TD equivalent": st.column_config.NumberColumn(
-                                 "Projected TDs (experimental)", format="%.2f")})
-            else:
-                st.info("Insufficient verified player data to generate projections for this team. No names or figures were fabricated.")
-        with st.expander("How are these player projections generated?"):
-            st.write("For each team, a projected team TD-equivalent total is calculated from team offense and opposing defense. The model then allocates that expected total across sampled players using their previous rushing and receiving TD involvement with a small smoothing prior.")
-            st.write("Passing touchdowns are NOT attributed to quarterbacks as scoring touchdowns. The model does not know snap shares, targets, route participation, official injuries, depth-chart changes or confirmed starters. Small samples and incomplete box scores can substantially distort the estimates.")
-            st.caption("Not validated, not probabilities, and not betting recommendations.")
+        # Offer real scheduled dates only; default to the next available day.
+        dates = sorted({g["date"][:10] for g in upcoming})
+        chosen_day = st.selectbox("Upcoming game date (UTC)", dates, key="player_td_date")
+        day_games = [g for g in upcoming if g["date"].startswith(chosen_day)]
+        st.caption(f"{len(day_games)} upcoming NFL game(s) scheduled for {chosen_day} UTC")
+        completed_json = json.dumps(completed, sort_keys=True)
+        all_rows = []
+        missing_reports = []
+        with st.spinner("Loading player estimates for every game on the selected day… This may take time on first load."):
+            for match in day_games:
+                result = load_player_td_projections(
+                    json.dumps(match, sort_keys=True), completed_json)
+                for side in ("away", "home"):
+                    team = result[side]
+                    if team["missing_games"]:
+                        missing_reports.append(
+                            f'{team["team"]}: {team["missing_games"]} of '
+                            f'{team["boxscore_games"]} sampled games lacked usable records')
+                    if not team["roster_verified"]:
+                        missing_reports.append(f'{team["team"]}: current roster not verified')
+                    for athlete in team["rows"]:
+                        all_rows.append({
+                            "Matchup": match["away"] + " @ " + match["home"],
+                            "Kickoff (UTC)": match["date"][:16].replace("T", " "),
+                            "Team": team["team"],
+                            "Player": athlete["Player"],
+                            "Position": athlete["Position"],
+                            "Projected TD equivalents": athlete["Projected TD equivalent"],
+                            "Games sampled": athlete["Recorded games"],
+                            "Availability": athlete["Roster status"],
+                        })
+        if all_rows:
+            board = pd.DataFrame(all_rows)
+            # Organize by actual upcoming fixture and player name, not as a
+            # scorer-pick leaderboard or a probability-of-TD ranking.
+            board = board.sort_values(
+                ["Kickoff (UTC)", "Matchup", "Team", "Player"],
+                kind="stable").reset_index(drop=True)
+            st.metric("Players with available estimates", len(board))
+            st.dataframe(
+                board, hide_index=True, use_container_width=True,
+                column_config={"Projected TD equivalents":
+                    st.column_config.NumberColumn(format="%.2f")},
+            )
+            st.download_button(
+                "Export daily research table (CSV)",
+                data=board.to_csv(index=False),
+                file_name="nfl_player_td_research_" + chosen_day + ".csv",
+                mime="text/csv",
+                key="export_player_tds",
+            )
+        else:
+            st.info("No trustworthy player records were returned for these matchups. The app will not invent names or estimates.")
+        if missing_reports:
+            with st.expander(f"Data coverage warnings ({len(missing_reports)})"):
+                for message in sorted(set(missing_reports)):
+                    st.caption("• " + message)
+        with st.expander("What does projected TD equivalent mean?"):
+            st.write(
+                "This is a theoretical allocation of each team's expected scoring "
+                "across players observed rushing or receiving in recent completed games. "
+                "It is not a count of likely scorers, a percentage probability, or a "
+                "validated individual touchdown model."
+            )
+            st.write(
+                "The model lacks verified game-day participation, player usage forecasts "
+                "and opponent position-specific defensive efficiency. Missing values "
+                "are clearly marked rather than assumed."
+            )
