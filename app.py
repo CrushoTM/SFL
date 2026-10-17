@@ -1,11 +1,13 @@
 """A single-purpose NFL upcoming-game research dashboard."""
 import datetime as dt
+import json
 import pandas as pd
 import streamlit as st
 from streamlit_autorefresh import st_autorefresh
 from engine import load_games
 from nfl_model import forecast, rolling_validation
 from team_td_model import project_team_tds
+from player_td_model import player_td_projection
 
 st.set_page_config(page_title="NFL Forecast Lab", page_icon="🏈", layout="wide")
 st_autorefresh(interval=900_000, key="nfl_refresh")
@@ -59,7 +61,7 @@ c3.metric("Data coverage", "Partial" if errors else "Loaded")
 st.caption("Source: public ESPN NFL schedule and results. Updated on request or every 15 minutes while open. Missing provider days: " + str(len(errors)))
 st.info("Model win shares are experimental estimates, NOT calibrated confidence levels. Offense and defense are approximated by points scored/allowed. Injuries, confirmed starters, transactions and position-specific defensive ratings have not been verified and are NOT part of this model.")
 
-game_tab, touchdown_tab = st.tabs(["🏈 Upcoming games", "📈 Projected team TDs"])
+game_tab, touchdown_tab, player_tab = st.tabs(["🏈 Upcoming games", "📈 Projected team TDs", "👤 Projected player TDs"])
 
 with game_tab:
     if not upcoming:
@@ -147,3 +149,45 @@ with touchdown_tab:
         with st.expander("How are projected team touchdowns calculated?"):
             st.write("The model blends each team's season-to-date points per game (55%) with the upcoming opponent's points allowed per game (45%). It converts the expected points to rough touchdown equivalents by dividing by seven.")
             st.write("This does NOT identify individual future scorers or calculate probabilities of one or two touchdowns. It is an exploratory scoring-strength indicator, not a validated touchdown forecast.")
+
+@st.cache_data(ttl=3600, show_spinner=False)
+def load_player_td_projections(match_json, completed_json):
+    # Lazy per-matchup fetching; do not download entire league's box scores on page load.
+    return player_td_projection(json.loads(match_json), json.loads(completed_json))
+
+with player_tab:
+    st.subheader("Upcoming player touchdown projections")
+    st.caption("Experimental expected OFFENSIVE touchdown equivalents for the NEXT game, informed by team scoring, opponent points allowed and players' sampled rushing/receiving touchdown involvement. These are forward estimates, not past totals.")
+    st.warning("Player availability and injuries are NOT confirmed. Roster presence does not mean active game-day status. Values are uncalibrated scoring allocations, not 1+ TD or 2+ TD likelihoods.")
+    if not upcoming:
+        st.info("No upcoming NFL matchup is available in the current schedule window.")
+    else:
+        labels = [g["away"] + " @ " + g["home"] + " · " + g["date"][:10] for g in upcoming]
+        idx = st.selectbox("Upcoming matchup", list(range(len(labels))),
+                           format_func=lambda i: labels[i], key="player_td_game")
+        match = upcoming[idx]
+        st.markdown("### " + match["away"] + " @ " + match["home"])
+        with st.spinner("Checking recent player involvement and roster snapshots…"):
+            result = load_player_td_projections(json.dumps(match, sort_keys=True),
+                                                json.dumps(completed, sort_keys=True))
+        for side in ("away", "home"):
+            team = result[side]
+            st.markdown("#### " + team["team"])
+            st.caption(f'Team projected TD equivalents: {team["total_expected_tds"]:.2f} · '
+                       f'{team["boxscore_games"]} historical games checked')
+            if team["missing_games"]:
+                st.warning(f'{team["missing_games"]} selected game(s) had no usable player stats for this team.')
+            if not team["roster_verified"]:
+                st.warning("Current roster could not be verified; listed players may have changed teams. "
+                           + (team["roster_error"] or ""))
+            if team["rows"]:
+                frame = pd.DataFrame(team["rows"])
+                st.dataframe(frame, hide_index=True, use_container_width=True,
+                             column_config={"Projected TD equivalent": st.column_config.NumberColumn(
+                                 "Projected TDs (experimental)", format="%.2f")})
+            else:
+                st.info("Insufficient verified player data to generate projections for this team. No names or figures were fabricated.")
+        with st.expander("How are these player projections generated?"):
+            st.write("For each team, a projected team TD-equivalent total is calculated from team offense and opposing defense. The model then allocates that expected total across sampled players using their previous rushing and receiving TD involvement with a small smoothing prior.")
+            st.write("Passing touchdowns are NOT attributed to quarterbacks as scoring touchdowns. The model does not know snap shares, targets, route participation, official injuries, depth-chart changes or confirmed starters. Small samples and incomplete box scores can substantially distort the estimates.")
+            st.caption("Not validated, not probabilities, and not betting recommendations.")
