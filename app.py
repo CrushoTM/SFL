@@ -36,13 +36,13 @@ if st.sidebar.button('Refresh now'):
 
 @st.cache_data(ttl=300, show_spinner=False)
 def get_games(league):
-    return load_games(league, before=25, after=7)
+    return load_games(league, before=45 if league == 'NFL' else 25, after=7)
 
 @st.cache_data(ttl=3600, show_spinner=False)
 def get_players(league, event_ids):
     # Capture past-event IDs in cache key so updates invalidate the cache.
     games, _ = get_games(league)
-    return rolling_player_projections(games, league, limit_games=8)
+    return rolling_player_projections(games, league, limit_games=30 if league == 'NFL' else 20)
 
 def show_history(frame, chart_key):
     """A small comparable table and chart for one specific historical stat."""
@@ -111,17 +111,18 @@ with t2:
 
 with t3:
     st.subheader('Player performance explorer')
-    st.caption('Observed box-score averages from up to eight recent completed games across this league. Not player projections.')
+    st.caption('Observed box-score averages from recent completed games (up to 30 NFL / 20 other games across the league). One-game observations are labeled. Not player projections.')
     player_key = f"players_loaded_{league}"
     if st.button('Load / refresh player history', key=f'load_{league}'):
         st.session_state[player_key] = True
         get_players.clear()
     if st.session_state.get(player_key, False):
         with st.spinner('Retrieving historical player statistics…'):
-            records = get_players(league, tuple(g['id'] for g in finished[-8:]))
+            records = get_players(league, tuple(g['id'] for g in finished[-(30 if league == 'NFL' else 20):]))
         if records:
             frame = pd.DataFrame(records)
             frame['Stat upper'] = frame['Stat'].astype(str).str.upper().str.strip()
+            frame['Position'] = frame['Position'].fillna('').astype(str).str.upper().str.strip()
             frame['Category lower'] = frame['Category'].astype(str).str.lower()
             search = st.text_input('Search player', key=f'search_{league}')
             if search:
@@ -134,15 +135,18 @@ with t3:
                     show_history(selection, f'mlb_{label}')
             elif league == 'NFL':
                 for title, position, section, codes in [
-                    ('Quarterbacks · passing', ['QB'], 'pass', ['YDS']),
-                    ('Wide receivers · receiving', ['WR'], 'receiv', ['YDS']),
-                    ('Tight ends · receiving', ['TE'], 'receiv', ['YDS']),
-                    ('Running backs · rushing', ['RB', 'HB', 'FB'], 'rush', ['YDS'])]:
+                    ('Quarterbacks · passing', ['QB', 'Q'], 'pass', ['YDS', 'PASS YDS']),
+                    ('Wide receivers · receiving', ['WR'], 'receiv', ['YDS', 'REC YDS']),
+                    ('Tight ends · receiving', ['TE'], 'receiv', ['YDS', 'REC YDS']),
+                    ('Running backs · rushing', ['RB', 'HB', 'FB'], 'rush', ['YDS', 'RUSH YDS'])]:
                     st.markdown('#### ' + title + ' — observed yards')
                     selection = frame[frame['Position'].isin(position) &
                                       frame['Category lower'].str.contains(section, na=False) &
                                       frame['Stat upper'].isin(codes)]
                     show_history(selection, f'nfl_{title}')
+                st.markdown('#### Other NFL player observations')
+                st.caption('If your data provider omits a position or uses a different stat label, those entries remain visible below.')
+                st.dataframe(frame[['Player', 'Team', 'Position', 'Category', 'Stat', 'Recent average', 'Sample games']].sort_values('Sample games', ascending=False).head(150), hide_index=True, use_container_width=True)
             else:
                 st.markdown('#### Soccer · observed player statistics')
                 stat_filter = st.selectbox('Statistic', sorted(frame['Stat'].unique()), key='soccer_stats')
@@ -159,7 +163,7 @@ with t4:
     elif not st.session_state.get('players_loaded_NFL', False):
         st.info('First load NFL player history in the Player stats tab.')
     else:
-        records = get_players(league, tuple(g['id'] for g in finished[-8:]))
+        records = get_players(league, tuple(g['id'] for g in finished[-(30 if league == 'NFL' else 20):]))
         frame = pd.DataFrame(records)
         if frame.empty:
             st.info('No player records available.')
