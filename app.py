@@ -9,9 +9,25 @@ from engine import LEAGUES, load_games, fit_ratings, predict, calibration_metric
 
 st.set_page_config(page_title='Sports Forecast Lab', page_icon='📊', layout='wide')
 st_autorefresh(interval=300_000, key='refresh_interval')
-st.title('📊 Sports Forecast Lab')
-st.caption('Free research prototype • MLB · NFL · Soccer • educational projections, not wagering recommendations')
-st.info('Forecasts use a basic Elo rating system. Probabilities are **not yet empirically calibrated**; player averages are descriptive, not verified predictive models. Live games do not receive in-game win probabilities.')
+st.markdown("""
+<style>
+.stApp {background:#0b1220;color:#e5eefb;}
+.block-container {padding-top:2.5rem;max-width:1400px;}
+[data-testid="stSidebar"] {background:#101c30;}
+div[data-testid="stMetric"] {background:#15233a;border:1px solid #263956;border-radius:15px;padding:15px 18px;}
+div[data-testid="stMetricLabel"] {color:#9cb0cc;}
+.stTabs [data-baseweb="tab-list"] {gap:12px;border-bottom:1px solid #263956;}
+.stTabs [data-baseweb="tab"] {padding:12px 20px;background:#122037;border-radius:9px 9px 0 0;}
+div[data-testid="stDataFrame"] {border-radius:12px;overflow:hidden;}
+.hero {border:1px solid #2a4162;background:linear-gradient(115deg,#172a47,#102035);
+border-radius:22px;padding:28px 32px;margin:2px 0 20px;}
+.hero h1 {font-size:2.4rem;letter-spacing:-1px;margin:0;color:#f7fbff;}
+.hero p {color:#a8bdd7;margin:10px 0 0;}
+</style>
+""", unsafe_allow_html=True)
+st.markdown('<div class="hero"><h1>Sports Forecast Lab</h1><p>MLB · NFL · Soccer | Independent sports research dashboard</p></div>', unsafe_allow_html=True)
+st.caption('Public game feeds · Automatic page refresh every five minutes · Experimental, uncalibrated forecasts')
+st.warning('Forecast probabilities are experimental, not validated. Player numbers below are historical averages, NOT predictions. Missing lineups and limited game samples can cause substantial errors.')
 league = st.sidebar.selectbox('Sport / league', list(LEAGUES))
 st.sidebar.write('Refreshes every 5 minutes while open. Scheduled GitHub workflow snapshots are separate.')
 if st.sidebar.button('Refresh now'):
@@ -27,6 +43,19 @@ def get_players(league, event_ids):
     # Capture past-event IDs in cache key so updates invalidate the cache.
     games, _ = get_games(league)
     return rolling_player_projections(games, league, limit_games=8)
+
+def show_history(frame, chart_key):
+    """A small comparable table and chart for one specific historical stat."""
+    if frame.empty:
+        st.caption('Not available in the recent box-score sample.')
+        return
+    frame = frame.sort_values('Recent average', ascending=False).head(30)
+    st.dataframe(frame[['Player', 'Team', 'Position', 'Recent average', 'Sample games', 'Observed min', 'Observed max']],
+                 hide_index=True, use_container_width=True)
+    st.bar_chart(frame.head(12).set_index('Player')['Recent average'])
+    st.download_button('Export CSV', frame.drop(columns=['Stat upper', 'Category lower'], errors='ignore').to_csv(index=False),
+                       file_name='observations_' + str(abs(hash(chart_key))) + '.csv',
+                       mime='text/csv', key='csv_' + str(abs(hash(chart_key))))
 
 with st.spinner('Retrieving public scores and schedules…'):
     games, errors = get_games(league)
@@ -46,62 +75,106 @@ c1.metric('Upcoming fixtures', len(upcoming))
 c2.metric('Live games', len(live))
 c3.metric('Completed games in fetched window',len(finished))
 
-t1,t2,t3,t4 = st.tabs(['Forecasts','Live / results','Player history','Accuracy & diagnostics'])
+t1, t2, t3, t4, t5 = st.tabs(['🏟 Matchups', '📡 Live & Results', '⚾ / 🏈 Player stats', '🏈 Touchdown history', '📈 Accuracy'])
+
 with t1:
+    st.subheader('Upcoming matchups')
+    st.caption('Elo estimates represent an uncalibrated model baseline; they are not reliability or confidence guarantees.')
     if not upcoming:
-        st.info('No upcoming fixtures in the seven-day window; this is normal during breaks or off-season.')
-    else:
-        rows=[]
-        for g in upcoming:
-            p=predict(g, ratings)
-            rows.append({'Kickoff (UTC)': g['date'][:16].replace('T',' '), 'Away': g['away'],
-                         'Home':g['home'], 'Away %':round(100*p['away'],1),
-                         'Draw %':round(100*p['draw'],1), 'Home %':round(100*p['home'],1),
-                         'Method':p['method']})
-        st.dataframe(pd.DataFrame(rows), hide_index=True, use_container_width=True)
-        st.caption('Ratings use only completed games in the fetched lookback; low sample size and omitted context can create significant errors.')
+        st.info('No upcoming fixtures in the next seven days. Try another sport or check again later.')
+    for g in upcoming[:30]:
+        p = predict(g, ratings)
+        with st.container(border=True):
+            left, mid, right = st.columns([2, 1, 2])
+            left.markdown(f"**{g['away']}**")
+            mid.markdown('### vs')
+            right.markdown(f"**{g['home']}**")
+            st.caption(f"Kickoff (UTC): {g['date'][:16].replace('T', ' ')} · {p['method']}")
+            a_col, h_col = st.columns(2)
+            a_col.metric('Away model probability', f"{p['away'] * 100:.1f}%")
+            h_col.metric('Home model probability', f"{p['home'] * 100:.1f}%")
+            if league.startswith('Soccer'):
+                st.caption(f"Draw model probability: {p['draw'] * 100:.1f}%")
+            st.progress(min(1.0, max(0.0, p['home'])))
+    st.info('Projected exact scores are not supplied by the current Elo-only engine. The historical score trends on this page are descriptive; a separate validated scoring model would be needed to make defensible score forecasts.')
+
 with t2:
-    chosen = live + list(reversed(finished))[:35]
-    if not chosen: st.write('No currently live or recently completed games.')
+    st.subheader('Live scores and recent results')
+    chosen = live + list(reversed(finished))[:45]
+    if not chosen:
+        st.info('No live or recently completed games are available.')
     else:
-        st.dataframe(pd.DataFrame([{'UTC date':g['date'][:16].replace('T',' '),
-          'Game':g['away']+' @ '+g['home'], 'Score':str(g['away_score'])+' - '+str(g['home_score']),
-          'Status':g['status']} for g in chosen]), hide_index=True, use_container_width=True)
+        rows = [{'Date (UTC)': g['date'][:16].replace('T', ' '), 'Away': g['away'],
+                 'Away score': g['away_score'], 'Home': g['home'],
+                 'Home score': g['home_score'], 'Status': g['status']} for g in chosen]
+        st.dataframe(pd.DataFrame(rows), hide_index=True, use_container_width=True)
+
 with t3:
-    st.subheader('Observed player statistics')
-    st.caption('This module retrieves box scores for up to eight recent completed games per league. Recent averages are NOT predictive probabilities and may reflect very small samples.')
+    st.subheader('Player performance explorer')
+    st.caption('Observed box-score averages from up to eight recent completed games across this league. Not player projections.')
     player_key = f"players_loaded_{league}"
-    if st.button('Load / reload player history (additional API requests)'):
+    if st.button('Load / refresh player history', key=f'load_{league}'):
         st.session_state[player_key] = True
+        get_players.clear()
     if st.session_state.get(player_key, False):
-        with st.spinner('Reading recent box scores…'):
+        with st.spinner('Retrieving historical player statistics…'):
             records = get_players(league, tuple(g['id'] for g in finished[-8:]))
         if records:
             frame = pd.DataFrame(records)
-            search = st.text_input('Search player by name', key=f'player_search_{league}')
-            categories = sorted(frame['Category'].dropna().unique().tolist())
-            selected_categories = st.multiselect('Stat categories', categories, default=categories, key=f'player_categories_{league}')
-            frame = frame[frame['Category'].isin(selected_categories)]
+            frame['Stat upper'] = frame['Stat'].astype(str).str.upper().str.strip()
+            frame['Category lower'] = frame['Category'].astype(str).str.lower()
+            search = st.text_input('Search player', key=f'search_{league}')
             if search:
                 frame = frame[frame['Player'].str.contains(search, case=False, regex=False)]
-            stat_options = sorted(frame['Stat'].dropna().unique().tolist())
-            selected_stat = st.selectbox('Chart statistic', ['All'] + stat_options, key=f'player_stat_{league}')
-            if selected_stat != 'All':
-                frame = frame[frame['Stat'] == selected_stat]
-            col1, col2 = st.columns(2)
-            col1.metric('Players in view', frame['Player'].nunique())
-            col2.metric('Observed player-stat rows', len(frame))
-            st.dataframe(frame, hide_index=True, use_container_width=True)
-            if not frame.empty:
-                chart = frame.nlargest(15, 'Recent average')[['Player', 'Stat', 'Recent average']].copy()
-                chart['Label'] = chart['Player'] + ' — ' + chart['Stat']
-                st.subheader('Recent averages — top 15 in filtered view')
-                st.bar_chart(chart.set_index('Label')['Recent average'])
-                st.caption('Only compare bars for the same statistic: units differ across categories. These are observed averages, not forecasted totals.')
-            st.download_button('Download filtered player averages CSV', frame.to_csv(index=False), 'player_observations.csv', 'text/csv')
+            if league == 'MLB':
+                categories = [('Hits', ['H']), ('Runs', ['R']), ('RBI', ['RBI']), ('Home runs', ['HR'])]
+                for label, codes in categories:
+                    st.markdown('#### ' + label + ' — observed averages')
+                    selection = frame[frame['Stat upper'].isin(codes) & frame['Category lower'].str.contains('bat', na=False)]
+                    show_history(selection, f'mlb_{label}')
+            elif league == 'NFL':
+                for title, position, section, codes in [
+                    ('Quarterbacks · passing', ['QB'], 'pass', ['YDS']),
+                    ('Wide receivers · receiving', ['WR'], 'receiv', ['YDS']),
+                    ('Tight ends · receiving', ['TE'], 'receiv', ['YDS']),
+                    ('Running backs · rushing', ['RB', 'HB', 'FB'], 'rush', ['YDS'])]:
+                    st.markdown('#### ' + title + ' — observed yards')
+                    selection = frame[frame['Position'].isin(position) &
+                                      frame['Category lower'].str.contains(section, na=False) &
+                                      frame['Stat upper'].isin(codes)]
+                    show_history(selection, f'nfl_{title}')
+            else:
+                st.markdown('#### Soccer · observed player statistics')
+                stat_filter = st.selectbox('Statistic', sorted(frame['Stat'].unique()), key='soccer_stats')
+                show_history(frame[frame['Stat'] == stat_filter], 'soccer')
         else:
-            st.info('No eligible box score observations were returned. Try again later or select another league.')
+            st.info('The public feed did not return enough box-score history. Try another league or check back later.')
+    else:
+        st.info('Click “Load / refresh player history” to fetch player data.')
+
 with t4:
+    st.subheader('Touchdown performance history')
+    if league != 'NFL':
+        st.info('Choose NFL in the left sidebar to view historical touchdown statistics.')
+    elif not st.session_state.get('players_loaded_NFL', False):
+        st.info('First load NFL player history in the Player stats tab.')
+    else:
+        records = get_players(league, tuple(g['id'] for g in finished[-8:]))
+        frame = pd.DataFrame(records)
+        if frame.empty:
+            st.info('No player records available.')
+        else:
+            frame['Category lower'] = frame['Category'].astype(str).str.lower()
+            frame['Stat upper'] = frame['Stat'].astype(str).str.upper().str.strip()
+            for label, section in [('Passing touchdowns (historical)', 'pass'),
+                                   ('Rushing touchdowns (historical)', 'rush'),
+                                   ('Receiving touchdowns (historical)', 'receiv')]:
+                st.markdown('#### ' + label)
+                subset = frame[(frame['Stat upper'].isin(['TD', 'TDS'])) &
+                               frame['Category lower'].str.contains(section, na=False)]
+                show_history(subset, label)
+            st.caption('These are averages of recorded touchdowns. They do not estimate the chance of scoring one or two touchdowns in a future game.')
+with t5:
     path=Path(__file__).parent/'data'/'history.json'
     history=json.loads(path.read_text()) if path.exists() else []
     eligible=[r for r in history if r.get('league')==league]
