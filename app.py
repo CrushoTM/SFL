@@ -103,6 +103,23 @@ with t1:
             st.progress(min(1.0, max(0.0, p['home'])))
     st.info('Projected exact scores are not supplied by the current Elo-only engine. The historical score trends on this page are descriptive; a separate validated scoring model would be needed to make defensible score forecasts.')
 
+with st.expander('Matchup context · recent defenses and data availability'):
+    st.caption('Factual context from completed games in the loaded window; not a player projection.')
+    if upcoming:
+        context_rows = []
+        for g in upcoming[:24]:
+            home_allowed = [x['away_score'] for x in finished if x['home_id'] == g['home_id']] + [x['home_score'] for x in finished if x['away_id'] == g['home_id']]
+            away_allowed = [x['away_score'] for x in finished if x['home_id'] == g['away_id']] + [x['home_score'] for x in finished if x['away_id'] == g['away_id']]
+            context_rows.append({
+                'Matchup': g['away'] + ' @ ' + g['home'],
+                'Home defense · avg points conceded': round(sum(home_allowed)/len(home_allowed), 1) if home_allowed else None,
+                'Away defense · avg points conceded': round(sum(away_allowed)/len(away_allowed), 1) if away_allowed else None,
+                'Home defense sample': len(home_allowed),
+                'Away defense sample': len(away_allowed)
+            })
+        st.dataframe(pd.DataFrame(context_rows), hide_index=True, use_container_width=True)
+    st.caption('Injuries, trades, current depth charts and expected playing time are NOT verified by this data collector. Do not treat an unlisted player as healthy or currently rostered.')
+
 with t2:
     st.subheader('Live scores and recent results')
     chosen = live + list(reversed(finished))[:45]
@@ -132,19 +149,23 @@ with t3:
                 selection = frame[frame['Stat upper'].isin(codes) & frame['Category lower'].str.contains('bat', na=False)]
                 show_history(selection, f'mlb_{label}')
         elif league == 'NFL':
-            for title, position, section, codes in [
-                ('Quarterbacks · passing', ['QB', 'Q'], 'pass', ['YDS', 'PASS YDS']),
-                ('Wide receivers · receiving', ['WR'], 'receiv', ['YDS', 'REC YDS']),
-                ('Tight ends · receiving', ['TE'], 'receiv', ['YDS', 'REC YDS']),
-                ('Running backs · rushing', ['RB', 'HB', 'FB'], 'rush', ['YDS', 'RUSH YDS'])]:
-                st.markdown('#### ' + title + ' — observed yards')
-                selection = frame[frame['Position'].isin(position) &
-                                  frame['Category lower'].str.contains(section, na=False) &
-                                  frame['Stat upper'].isin(codes)]
-                show_history(selection, f'nfl_{title}')
-            st.markdown('#### Other NFL player observations')
-            st.caption('If your data provider omits a position or uses a different stat label, those entries remain visible below.')
-            st.dataframe(frame[['Player', 'Team', 'Position', 'Category', 'Stat', 'Recent average', 'Sample games']].sort_values('Sample games', ascending=False).head(150), hide_index=True, use_container_width=True)
+            # ESPN often omits position metadata in event boxscores.
+            # Group by verified stat category; do not hide missing-position athletes.
+            groups = [
+                ('Passing yards · quarterbacks and other passers', 'pass', ['YDS', 'PASS YDS']),
+                ('Receiving yards · all receivers (WR / TE / RB)', 'receiv', ['YDS', 'REC YDS']),
+                ('Rushing yards · running backs and other rushers', 'rush', ['YDS', 'RUSH YDS']),
+            ]
+            for title, section, codes in groups:
+                st.markdown('#### ' + title)
+                selection = frame[
+                    frame['Category lower'].str.contains(section, na=False)
+                    & frame['Stat upper'].isin(codes)
+                ]
+                show_history(selection, 'nfl_' + section)
+            st.caption('Some players have no position in the public box score. These groups use the observed statistical category rather than guessing their roster position.')
+            with st.expander('All observed NFL statistics and source labels'):
+                st.dataframe(frame[['Player', 'Team', 'Position', 'Category', 'Stat', 'Recent average', 'Sample games']].sort_values('Sample games', ascending=False).head(200), hide_index=True, use_container_width=True)
         else:
             st.markdown('#### Soccer · observed player statistics')
             stat_filter = st.selectbox('Statistic', sorted(frame['Stat'].unique()), key='soccer_stats')
