@@ -1,12 +1,11 @@
 """A single-purpose NFL upcoming-game research dashboard."""
 import datetime as dt
-import json
 import pandas as pd
 import streamlit as st
 from streamlit_autorefresh import st_autorefresh
 from engine import load_games
 from nfl_model import forecast, rolling_validation
-from touchdown_history import summarize_touchdowns
+from team_td_model import project_team_tds
 
 st.set_page_config(page_title="NFL Forecast Lab", page_icon="🏈", layout="wide")
 st_autorefresh(interval=900_000, key="nfl_refresh")
@@ -60,7 +59,7 @@ c3.metric("Data coverage", "Partial" if errors else "Loaded")
 st.caption("Source: public ESPN NFL schedule and results. Updated on request or every 15 minutes while open. Missing provider days: " + str(len(errors)))
 st.info("Model win shares are experimental estimates, NOT calibrated confidence levels. Offense and defense are approximated by points scored/allowed. Injuries, confirmed starters, transactions and position-specific defensive ratings have not been verified and are NOT part of this model.")
 
-game_tab, touchdown_tab = st.tabs(["🏈 Upcoming games", "📊 Touchdown history"])
+game_tab, touchdown_tab = st.tabs(["🏈 Upcoming games", "📈 Projected team TDs"])
 
 with game_tab:
     if not upcoming:
@@ -121,34 +120,30 @@ with game_tab:
             st.caption("Insufficient completed games for the chronological check.")
         st.caption("Ties are excluded from the historical check; the binary model does not separately predict ties.")
     
-@st.cache_data(ttl=3600, show_spinner=False)
-def get_touchdown_history(games_json, team_id, team_name):
-    return summarize_touchdowns(json.loads(games_json), team_id, team_name, limit=6)
-
 with touchdown_tab:
-    st.subheader("Touchdown history by upcoming matchup")
-    st.caption("Completed-game rushing and receiving touchdowns from public box scores. No future TD scorer picks or 1+/2+ probabilities.")
+    st.subheader("Upcoming-game touchdown projections")
+    st.caption("Experimental TEAM offensive touchdown-equivalent estimates for scheduled games, not past player totals or touchdown-scorer betting picks.")
+    st.warning("These are touchdown equivalents derived from expected team points, not verified projected touchdown counts. Field goals, defensive scores, injuries, trades and lineups are not modeled. The range is illustrative, NOT a confidence interval.")
     if not upcoming:
-        st.info("No upcoming games to select.")
+        st.info("There are no upcoming NFL games to project in the current schedule window.")
     else:
-        options = [g["away"] + " @ " + g["home"] + " · " + g["date"][:10] for g in upcoming]
-        choice = st.selectbox("Choose a scheduled NFL matchup", range(len(options)),
-                              format_func=lambda index: options[index], key="td_matchup")
-        match = upcoming[choice]
-        cols = st.columns(2)
-        for col, team_id, name in ((cols[0], match["away_id"], match["away"]),
-                                   (cols[1], match["home_id"], match["home"])):
-            with col:
-                st.markdown("#### " + name)
-                with st.spinner("Loading recent touchdown records…"):
-                    # Cache data per team and historical fixture set.
-                    summary = get_touchdown_history(json.dumps(completed, sort_keys=True), team_id, name)
-                if summary["missing_games"]:
-                    st.warning(f"{summary['missing_games']} of {summary['games_requested']} recent games lacked usable team box-score data.")
-                st.caption(f"Last {summary['games_requested']} completed team games requested")
-                if summary["rows"]:
-                    st.dataframe(pd.DataFrame(summary["rows"]), use_container_width=True,
-                                 hide_index=True)
-                else:
-                    st.info("No rushing or receiving touchdown records were available for this team in the sampled games.")
-        st.caption("Players shown were recorded in previous games. This does not confirm active status, injuries or expected playing time for the upcoming matchup.")
+        for match in upcoming:
+            result = project_team_tds(match, completed)
+            with st.container(border=True):
+                kickoff = dt.datetime.fromisoformat(match["date"].replace("Z", "+00:00"))
+                st.caption(kickoff.strftime("%a %b %d · %I:%M %p UTC"))
+                st.markdown("#### " + match["away"] + " @ " + match["home"])
+                left, right = st.columns(2)
+                for col, side, name, sample in [
+                    (left, "away", match["away"], result["away_games"]),
+                    (right, "home", match["home"], result["home_games"])
+                ]:
+                    with col:
+                        st.metric(name + " · projected TD equivalents", f'{result[side]["expected"]:.2f}')
+                        st.caption(f'Illustrative range: {result[side]["low"]:.2f}–{result[side]["high"]:.2f}')
+                        st.caption(f'Estimated team points: {result[side]["points"]:.1f} · {sample} past team games')
+                if min(result["away_games"], result["home_games"]) < 3:
+                    st.info("Limited historical sample — low-information estimate.")
+        with st.expander("How are projected team touchdowns calculated?"):
+            st.write("The model blends each team's season-to-date points per game (55%) with the upcoming opponent's points allowed per game (45%). It converts the expected points to rough touchdown equivalents by dividing by seven.")
+            st.write("This does NOT identify individual future scorers or calculate probabilities of one or two touchdowns. It is an exploratory scoring-strength indicator, not a validated touchdown forecast.")
