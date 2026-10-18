@@ -663,7 +663,8 @@
       "away": 0.4538,
       "method": "Elo baseline (uncalibrated)"
     },
-    "actual": null
+    "actual": "away",
+    "final_score": "34-31"
   },
   {
     "id": "Soccer \u2014 LaLiga|401882845",
@@ -685,7 +686,8 @@
       "away": 0.3136,
       "method": "Elo + heuristic draw prior (uncalibrated)"
     },
-    "actual": null
+    "actual": "home",
+    "final_score": "1-2"
   },
   {
     "id": "Soccer \u2014 EPL|401878769",
@@ -707,7 +709,8 @@
       "away": 0.3398,
       "method": "Elo + heuristic draw prior (uncalibrated)"
     },
-    "actual": null
+    "actual": "away",
+    "final_score": "1-0"
   },
   {
     "id": "Soccer \u2014 LaLiga|401882841",
@@ -729,7 +732,8 @@
       "away": 0.3326,
       "method": "Elo + heuristic draw prior (uncalibrated)"
     },
-    "actual": null
+    "actual": "away",
+    "final_score": "5-2"
   },
   {
     "id": "NFL|401872999",
