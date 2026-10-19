@@ -1077,7 +1077,8 @@
       "away": 0.3328,
       "method": "Elo + heuristic draw prior (uncalibrated)"
     },
-    "actual": null
+    "actual": "home",
+    "final_score": "1-3"
   },
   {
     "id": "Soccer \u2014 LaLiga|401882842",
@@ -1099,7 +1100,8 @@
       "away": 0.3328,
       "method": "Elo + heuristic draw prior (uncalibrated)"
     },
-    "actual": null
+    "actual": "draw",
+    "final_score": "1-1"
   },
   {
     "id": "MLB|401908028",
