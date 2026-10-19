@@ -939,7 +939,8 @@
       "away": 0.412,
       "method": "Elo baseline (uncalibrated)"
     },
-    "actual": null
+    "actual": "away",
+    "final_score": "18-16"
   },
   {
     "id": "NFL|401873006",
@@ -961,7 +962,8 @@
       "away": 0.3952,
       "method": "Elo baseline (uncalibrated)"
     },
-    "actual": null
+    "actual": "home",
+    "final_score": "6-22"
   },
   {
     "id": "NFL|401873005",
@@ -983,7 +985,8 @@
       "away": 0.4839,
       "method": "Elo baseline (uncalibrated)"
     },
-    "actual": null
+    "actual": "away",
+    "final_score": "33-30"
   },
   {
     "id": "MLB|401930515",
@@ -1005,7 +1008,8 @@
       "away": 0.3836,
       "method": "Elo baseline (uncalibrated)"
     },
-    "actual": null
+    "actual": "away",
+    "final_score": "3-1"
   },
   {
     "id": "Soccer \u2014 MLS|761889",
@@ -1027,7 +1031,8 @@
       "away": 0.3249,
       "method": "Elo + heuristic draw prior (uncalibrated)"
     },
-    "actual": null
+    "actual": "away",
+    "final_score": "2-0"
   },
   {
     "id": "NFL|401873007",
@@ -1049,7 +1054,8 @@
       "away": 0.3598,
       "method": "Elo baseline (uncalibrated)"
     },
-    "actual": null
+    "actual": "home",
+    "final_score": "13-23"
   },
   {
     "id": "Soccer \u2014 EPL|401879257",
@@ -2676,6 +2682,72 @@
       "draw": 0.2394,
       "away": 0.3134,
       "method": "Elo + heuristic draw prior (uncalibrated)"
+    },
+    "actual": null
+  },
+  {
+    "id": "Soccer \u2014 LaLiga|401882828",
+    "api_id": "401882828",
+    "league": "Soccer \u2014 LaLiga",
+    "date": "2026-10-26T20:00Z",
+    "home": "Sevilla",
+    "away": "Osasuna",
+    "home_id": "243",
+    "away_id": "97",
+    "home_score": 0,
+    "away_score": 0,
+    "state": "pre",
+    "status": "Scheduled",
+    "forecast_created": "2026-10-19T04:51:45.581323+00:00",
+    "probabilities": {
+      "home": 0.4226,
+      "draw": 0.2459,
+      "away": 0.3316,
+      "method": "Elo + heuristic draw prior (uncalibrated)"
+    },
+    "actual": null
+  },
+  {
+    "id": "MLB|401908044",
+    "api_id": "401908044",
+    "league": "MLB",
+    "date": "2026-10-27T00:00Z",
+    "home": "Rays/Guardians",
+    "away": "Milwaukee Brewers",
+    "home_id": "-1",
+    "away_id": "8",
+    "home_score": 0,
+    "away_score": 0,
+    "state": "pre",
+    "status": "Scheduled",
+    "forecast_created": "2026-10-19T04:51:45.581323+00:00",
+    "probabilities": {
+      "home": 0.4933,
+      "draw": 0.0,
+      "away": 0.5067,
+      "method": "Elo baseline (uncalibrated)"
+    },
+    "actual": null
+  },
+  {
+    "id": "NFL|401873009",
+    "api_id": "401873009",
+    "league": "NFL",
+    "date": "2026-10-27T00:15Z",
+    "home": "Philadelphia Eagles",
+    "away": "Dallas Cowboys",
+    "home_id": "21",
+    "away_id": "6",
+    "home_score": 0,
+    "away_score": 0,
+    "state": "pre",
+    "status": "Scheduled",
+    "forecast_created": "2026-10-19T04:51:45.581323+00:00",
+    "probabilities": {
+      "home": 0.5818,
+      "draw": 0.0,
+      "away": 0.4182,
+      "method": "Elo baseline (uncalibrated)"
     },
     "actual": null
   }
