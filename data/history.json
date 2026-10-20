@@ -1169,7 +1169,8 @@
       "away": 0.3294,
       "method": "Elo + heuristic draw prior (uncalibrated)"
     },
-    "actual": null
+    "actual": "draw",
+    "final_score": "2-2"
   },
   {
     "id": "Soccer \u2014 UCL|401915404",
@@ -1191,7 +1192,8 @@
       "away": 0.3087,
       "method": "Elo + heuristic draw prior (uncalibrated)"
     },
-    "actual": null
+    "actual": "away",
+    "final_score": "2-1"
   },
   {
     "id": "Soccer \u2014 UCL|401915402",
@@ -1213,7 +1215,8 @@
       "away": 0.3209,
       "method": "Elo + heuristic draw prior (uncalibrated)"
     },
-    "actual": null
+    "actual": "home",
+    "final_score": "0-4"
   },
   {
     "id": "Soccer \u2014 UCL|401915398",
@@ -1235,7 +1238,8 @@
       "away": 0.3243,
       "method": "Elo + heuristic draw prior (uncalibrated)"
     },
-    "actual": null
+    "actual": "away",
+    "final_score": "1-0"
   },
   {
     "id": "Soccer \u2014 UCL|401915397",
@@ -1257,7 +1261,8 @@
       "away": 0.3198,
       "method": "Elo + heuristic draw prior (uncalibrated)"
     },
-    "actual": null
+    "actual": "home",
+    "final_score": "3-4"
   },
   {
     "id": "Soccer \u2014 UCL|401915401",
@@ -1279,7 +1284,8 @@
       "away": 0.3271,
       "method": "Elo + heuristic draw prior (uncalibrated)"
     },
-    "actual": null
+    "actual": "home",
+    "final_score": "1-5"
   },
   {
     "id": "Soccer \u2014 UCL|401915400",
@@ -1301,7 +1307,8 @@
       "away": 0.3398,
       "method": "Elo + heuristic draw prior (uncalibrated)"
     },
-    "actual": null
+    "actual": "home",
+    "final_score": "3-4"
   },
   {
     "id": "Soccer \u2014 UCL|401915399",
@@ -1323,7 +1330,8 @@
       "away": 0.326,
       "method": "Elo + heuristic draw prior (uncalibrated)"
     },
-    "actual": null
+    "actual": "home",
+    "final_score": "2-4"
   },
   {
     "id": "Soccer \u2014 UCL|401915392",
@@ -1345,7 +1353,8 @@
       "away": 0.3198,
       "method": "Elo + heuristic draw prior (uncalibrated)"
     },
-    "actual": null
+    "actual": "draw",
+    "final_score": "1-1"
   },
   {
     "id": "MLB|401908029",
