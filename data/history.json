@@ -1123,7 +1123,8 @@
       "away": 0.4747,
       "method": "Elo baseline (uncalibrated)"
     },
-    "actual": null
+    "actual": "home",
+    "final_score": "3-7"
   },
   {
     "id": "NFL|401873008",
@@ -1145,7 +1146,8 @@
       "away": 0.4024,
       "method": "Elo baseline (uncalibrated)"
     },
-    "actual": null
+    "actual": "home",
+    "final_score": "17-23"
   },
   {
     "id": "Soccer \u2014 UCL|401915403",
@@ -2749,6 +2751,28 @@
       "home": 0.5818,
       "draw": 0.0,
       "away": 0.4182,
+      "method": "Elo baseline (uncalibrated)"
+    },
+    "actual": null
+  },
+  {
+    "id": "MLB|401908045",
+    "api_id": "401908045",
+    "league": "MLB",
+    "date": "2026-10-28T00:00Z",
+    "home": "Tampa Bay Rays",
+    "away": "Milwaukee Brewers",
+    "home_id": "30",
+    "away_id": "8",
+    "home_score": 0,
+    "away_score": 0,
+    "state": "pre",
+    "status": "Scheduled",
+    "forecast_created": "2026-10-20T04:59:43.815520+00:00",
+    "probabilities": {
+      "home": 0.5573,
+      "draw": 0.0,
+      "away": 0.4427,
       "method": "Elo baseline (uncalibrated)"
     },
     "actual": null
