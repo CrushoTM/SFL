@@ -1444,7 +1444,8 @@
       "away": 0.3256,
       "method": "Elo + heuristic draw prior (uncalibrated)"
     },
-    "actual": null
+    "actual": "home",
+    "final_score": "1-3"
   },
   {
     "id": "Soccer \u2014 UCL|401915394",
@@ -1466,7 +1467,8 @@
       "away": 0.3095,
       "method": "Elo + heuristic draw prior (uncalibrated)"
     },
-    "actual": null
+    "actual": "home",
+    "final_score": "1-3"
   },
   {
     "id": "Soccer \u2014 UCL|401915312",
@@ -1488,7 +1490,8 @@
       "away": 0.3328,
       "method": "Elo + heuristic draw prior (uncalibrated)"
     },
-    "actual": null
+    "actual": "draw",
+    "final_score": "2-2"
   },
   {
     "id": "Soccer \u2014 UCL|401915388",
@@ -1510,7 +1513,8 @@
       "away": 0.3035,
       "method": "Elo + heuristic draw prior (uncalibrated)"
     },
-    "actual": null
+    "actual": "home",
+    "final_score": "0-3"
   },
   {
     "id": "Soccer \u2014 UCL|401915390",
@@ -1532,7 +1536,8 @@
       "away": 0.3422,
       "method": "Elo + heuristic draw prior (uncalibrated)"
     },
-    "actual": null
+    "actual": "home",
+    "final_score": "0-1"
   },
   {
     "id": "Soccer \u2014 UCL|401915389",
@@ -1554,7 +1559,8 @@
       "away": 0.3243,
       "method": "Elo + heuristic draw prior (uncalibrated)"
     },
-    "actual": null
+    "actual": "home",
+    "final_score": "0-1"
   },
   {
     "id": "Soccer \u2014 UCL|401915313",
@@ -1576,7 +1582,8 @@
       "away": 0.3219,
       "method": "Elo + heuristic draw prior (uncalibrated)"
     },
-    "actual": null
+    "actual": "home",
+    "final_score": "1-4"
   },
   {
     "id": "Soccer \u2014 UCL|401915391",
@@ -1598,7 +1605,8 @@
       "away": 0.3001,
       "method": "Elo + heuristic draw prior (uncalibrated)"
     },
-    "actual": null
+    "actual": "away",
+    "final_score": "3-2"
   },
   {
     "id": "Soccer \u2014 MLS|761773",
