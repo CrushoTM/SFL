@@ -1628,7 +1628,8 @@
       "away": 0.3198,
       "method": "Elo + heuristic draw prior (uncalibrated)"
     },
-    "actual": null
+    "actual": "home",
+    "final_score": "1-2"
   },
   {
     "id": "NFL|401873010",
@@ -3123,6 +3124,28 @@
       "draw": 0.236,
       "away": 0.3035,
       "method": "Elo + heuristic draw prior (uncalibrated)"
+    },
+    "actual": null
+  },
+  {
+    "id": "NFL|401873023",
+    "api_id": "401873023",
+    "league": "NFL",
+    "date": "2026-10-30T00:15Z",
+    "home": "Green Bay Packers",
+    "away": "Carolina Panthers",
+    "home_id": "9",
+    "away_id": "29",
+    "home_score": 0,
+    "away_score": 0,
+    "state": "pre",
+    "status": "Scheduled",
+    "forecast_created": "2026-10-22T05:00:05.611763+00:00",
+    "probabilities": {
+      "home": 0.5907,
+      "draw": 0.0,
+      "away": 0.4093,
+      "method": "Elo baseline (uncalibrated)"
     },
     "actual": null
   }
