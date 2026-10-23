@@ -3148,5 +3148,49 @@
       "method": "Elo baseline (uncalibrated)"
     },
     "actual": null
+  },
+  {
+    "id": "Soccer \u2014 LaLiga|401882817",
+    "api_id": "401882817",
+    "league": "Soccer \u2014 LaLiga",
+    "date": "2026-10-30T20:00Z",
+    "home": "Villarreal",
+    "away": "Espanyol",
+    "home_id": "102",
+    "away_id": "88",
+    "home_score": 0,
+    "away_score": 0,
+    "state": "pre",
+    "status": "Scheduled",
+    "forecast_created": "2026-10-23T00:43:39.416145+00:00",
+    "probabilities": {
+      "home": 0.4437,
+      "draw": 0.2403,
+      "away": 0.316,
+      "method": "Elo + heuristic draw prior (uncalibrated)"
+    },
+    "actual": null
+  },
+  {
+    "id": "MLB|401908047",
+    "api_id": "401908047",
+    "league": "MLB",
+    "date": "2026-10-31T00:00Z",
+    "home": "Milwaukee Brewers",
+    "away": "Tampa Bay Rays",
+    "home_id": "8",
+    "away_id": "30",
+    "home_score": 0,
+    "away_score": 0,
+    "state": "pre",
+    "status": "Scheduled",
+    "forecast_created": "2026-10-23T00:43:39.416145+00:00",
+    "probabilities": {
+      "home": 0.5918,
+      "draw": 0.0,
+      "away": 0.4082,
+      "method": "Elo baseline (uncalibrated)"
+    },
+    "actual": null
   }
 ]
