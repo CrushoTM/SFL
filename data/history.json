@@ -1651,7 +1651,8 @@
       "away": 0.4905,
       "method": "Elo baseline (uncalibrated)"
     },
-    "actual": null
+    "actual": "home",
+    "final_score": "24-30"
   },
   {
     "id": "Soccer \u2014 EPL|401879253",
