@@ -2640,7 +2640,8 @@
       "away": 0.3088,
       "method": "Elo + heuristic draw prior (uncalibrated)"
     },
-    "actual": null
+    "actual": "away",
+    "final_score": "2-1"
   },
   {
     "id": "NFL|401873019",
@@ -2662,7 +2663,8 @@
       "away": 0.52,
       "method": "Elo baseline (uncalibrated)"
     },
-    "actual": null
+    "actual": "away",
+    "final_score": "30-16"
   },
   {
     "id": "NFL|401873020",
@@ -2684,7 +2686,8 @@
       "away": 0.4184,
       "method": "Elo baseline (uncalibrated)"
     },
-    "actual": null
+    "actual": "home",
+    "final_score": "17-20"
   },
   {
     "id": "NFL|401873021",
@@ -2706,7 +2709,8 @@
       "away": 0.435,
       "method": "Elo baseline (uncalibrated)"
     },
-    "actual": null
+    "actual": "away",
+    "final_score": "35-21"
   },
   {
     "id": "NFL|401873022",
@@ -4223,6 +4227,72 @@
       "draw": 0.2438,
       "away": 0.3257,
       "method": "Elo + heuristic draw prior (uncalibrated)"
+    },
+    "actual": null
+  },
+  {
+    "id": "Soccer \u2014 EPL|401878762",
+    "api_id": "401878762",
+    "league": "Soccer \u2014 EPL",
+    "date": "2026-11-02T20:00Z",
+    "home": "Newcastle United",
+    "away": "Everton",
+    "home_id": "361",
+    "away_id": "368",
+    "home_score": 0,
+    "away_score": 0,
+    "state": "pre",
+    "status": "Scheduled",
+    "forecast_created": "2026-10-26T00:27:39.987980+00:00",
+    "probabilities": {
+      "home": 0.4604,
+      "draw": 0.236,
+      "away": 0.3036,
+      "method": "Elo + heuristic draw prior (uncalibrated)"
+    },
+    "actual": null
+  },
+  {
+    "id": "Soccer \u2014 LaLiga|401882824",
+    "api_id": "401882824",
+    "league": "Soccer \u2014 LaLiga",
+    "date": "2026-11-02T20:00Z",
+    "home": "Deportivo",
+    "away": "Osasuna",
+    "home_id": "90",
+    "away_id": "97",
+    "home_score": 0,
+    "away_score": 0,
+    "state": "pre",
+    "status": "Scheduled",
+    "forecast_created": "2026-10-26T00:27:39.987980+00:00",
+    "probabilities": {
+      "home": 0.4101,
+      "draw": 0.2492,
+      "away": 0.3407,
+      "method": "Elo + heuristic draw prior (uncalibrated)"
+    },
+    "actual": null
+  },
+  {
+    "id": "NFL|401873036",
+    "api_id": "401873036",
+    "league": "NFL",
+    "date": "2026-11-03T01:15Z",
+    "home": "Seattle Seahawks",
+    "away": "Chicago Bears",
+    "home_id": "26",
+    "away_id": "3",
+    "home_score": 0,
+    "away_score": 0,
+    "state": "pre",
+    "status": "Scheduled",
+    "forecast_created": "2026-10-26T00:27:39.987980+00:00",
+    "probabilities": {
+      "home": 0.4876,
+      "draw": 0.0,
+      "away": 0.5124,
+      "method": "Elo baseline (uncalibrated)"
     },
     "actual": null
   }
