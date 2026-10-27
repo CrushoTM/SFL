@@ -2801,7 +2801,8 @@
       "away": 0.5067,
       "method": "Elo baseline (uncalibrated)"
     },
-    "actual": null
+    "actual": "away",
+    "final_score": "10-1"
   },
   {
     "id": "NFL|401873009",
@@ -2823,7 +2824,8 @@
       "away": 0.4182,
       "method": "Elo baseline (uncalibrated)"
     },
-    "actual": null
+    "actual": "away",
+    "final_score": "38-21"
   },
   {
     "id": "MLB|401908045",
