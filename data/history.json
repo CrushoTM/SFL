@@ -3238,7 +3238,8 @@
       "away": 0.316,
       "method": "Elo + heuristic draw prior (uncalibrated)"
     },
-    "actual": null
+    "actual": "away",
+    "final_score": "1-0"
   },
   {
     "id": "MLB|401908047",
