@@ -3215,7 +3215,8 @@
       "away": 0.4093,
       "method": "Elo baseline (uncalibrated)"
     },
-    "actual": null
+    "actual": "home",
+    "final_score": "19-27"
   },
   {
     "id": "Soccer \u2014 LaLiga|401882817",
@@ -4732,6 +4733,50 @@
       "draw": 0.0,
       "away": 0.4623,
       "method": "Elo baseline (uncalibrated)"
+    },
+    "actual": null
+  },
+  {
+    "id": "Soccer \u2014 EPL|401879242",
+    "api_id": "401879242",
+    "league": "Soccer \u2014 EPL",
+    "date": "2026-11-06T20:00Z",
+    "home": "Everton",
+    "away": "Coventry City",
+    "home_id": "368",
+    "away_id": "388",
+    "home_score": 0,
+    "away_score": 0,
+    "state": "pre",
+    "status": "Scheduled",
+    "forecast_created": "2026-10-30T05:58:54.312782+00:00",
+    "probabilities": {
+      "home": 0.4454,
+      "draw": 0.2399,
+      "away": 0.3147,
+      "method": "Elo + heuristic draw prior (uncalibrated)"
+    },
+    "actual": null
+  },
+  {
+    "id": "Soccer \u2014 LaLiga|401882809",
+    "api_id": "401882809",
+    "league": "Soccer \u2014 LaLiga",
+    "date": "2026-11-06T20:00Z",
+    "home": "Sevilla",
+    "away": "Alav\u00e9s",
+    "home_id": "243",
+    "away_id": "96",
+    "home_score": 0,
+    "away_score": 0,
+    "state": "pre",
+    "status": "Scheduled",
+    "forecast_created": "2026-10-30T05:58:54.312782+00:00",
+    "probabilities": {
+      "home": 0.4429,
+      "draw": 0.2405,
+      "away": 0.3165,
+      "method": "Elo + heuristic draw prior (uncalibrated)"
     },
     "actual": null
   }
