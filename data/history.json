@@ -3467,7 +3467,8 @@
       "away": 0.3421,
       "method": "Elo + heuristic draw prior (uncalibrated)"
     },
-    "actual": null
+    "actual": "home",
+    "final_score": "0-4"
   },
   {
     "id": "Soccer \u2014 EPL|401878761",
@@ -3489,7 +3490,8 @@
       "away": 0.3033,
       "method": "Elo + heuristic draw prior (uncalibrated)"
     },
-    "actual": null
+    "actual": "home",
+    "final_score": "0-2"
   },
   {
     "id": "Soccer \u2014 LaLiga|401882825",
@@ -3511,7 +3513,8 @@
       "away": 0.3256,
       "method": "Elo + heuristic draw prior (uncalibrated)"
     },
-    "actual": null
+    "actual": "home",
+    "final_score": "1-2"
   },
   {
     "id": "Soccer \u2014 MLS|761924",
@@ -3533,7 +3536,8 @@
       "away": 0.2948,
       "method": "Elo + heuristic draw prior (uncalibrated)"
     },
-    "actual": null
+    "actual": "home",
+    "final_score": "0-3"
   },
   {
     "id": "Soccer \u2014 MLS|761919",
@@ -3555,7 +3559,8 @@
       "away": 0.3464,
       "method": "Elo + heuristic draw prior (uncalibrated)"
     },
-    "actual": null
+    "actual": "home",
+    "final_score": "0-1"
   },
   {
     "id": "Soccer \u2014 MLS|761930",
@@ -3577,7 +3582,8 @@
       "away": 0.3219,
       "method": "Elo + heuristic draw prior (uncalibrated)"
     },
-    "actual": null
+    "actual": "draw",
+    "final_score": "1-1"
   },
   {
     "id": "Soccer \u2014 MLS|761928",
@@ -3599,7 +3605,8 @@
       "away": 0.3542,
       "method": "Elo + heuristic draw prior (uncalibrated)"
     },
-    "actual": null
+    "actual": "draw",
+    "final_score": "1-1"
   },
   {
     "id": "Soccer \u2014 MLS|761926",
@@ -3621,7 +3628,8 @@
       "away": 0.3328,
       "method": "Elo + heuristic draw prior (uncalibrated)"
     },
-    "actual": null
+    "actual": "away",
+    "final_score": "1-0"
   },
   {
     "id": "Soccer \u2014 EPL|401879250",
@@ -3643,7 +3651,8 @@
       "away": 0.3221,
       "method": "Elo + heuristic draw prior (uncalibrated)"
     },
-    "actual": null
+    "actual": "draw",
+    "final_score": "1-1"
   },
   {
     "id": "Soccer \u2014 LaLiga|401882822",
@@ -3665,7 +3674,8 @@
       "away": 0.3029,
       "method": "Elo + heuristic draw prior (uncalibrated)"
     },
-    "actual": null
+    "actual": "home",
+    "final_score": "1-6"
   },
   {
     "id": "Soccer \u2014 MLS|761925",
@@ -3687,7 +3697,8 @@
       "away": 0.2996,
       "method": "Elo + heuristic draw prior (uncalibrated)"
     },
-    "actual": null
+    "actual": "home",
+    "final_score": "1-4"
   },
   {
     "id": "Soccer \u2014 MLS|761929",
@@ -3709,7 +3720,8 @@
       "away": 0.3338,
       "method": "Elo + heuristic draw prior (uncalibrated)"
     },
-    "actual": null
+    "actual": "home",
+    "final_score": "1-2"
   },
   {
     "id": "MLB|401908048",
