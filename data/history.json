@@ -4363,7 +4363,8 @@
       "away": 0.5124,
       "method": "Elo baseline (uncalibrated)"
     },
-    "actual": null
+    "actual": "away",
+    "final_score": "34-17"
   },
   {
     "id": "Soccer \u2014 UCL|401915311",
