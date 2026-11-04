@@ -4593,7 +4593,8 @@
       "away": 0.3449,
       "method": "Elo + heuristic draw prior (uncalibrated)"
     },
-    "actual": null
+    "actual": "away",
+    "final_score": "3-2"
   },
   {
     "id": "Soccer \u2014 UCL|401915382",
@@ -4615,7 +4616,8 @@
       "away": 0.3326,
       "method": "Elo + heuristic draw prior (uncalibrated)"
     },
-    "actual": null
+    "actual": "home",
+    "final_score": "2-3"
   },
   {
     "id": "Soccer \u2014 UCL|401915304",
@@ -4637,7 +4639,8 @@
       "away": 0.3219,
       "method": "Elo + heuristic draw prior (uncalibrated)"
     },
-    "actual": null
+    "actual": "home",
+    "final_score": "1-2"
   },
   {
     "id": "Soccer \u2014 UCL|401915301",
@@ -4659,7 +4662,8 @@
       "away": 0.3409,
       "method": "Elo + heuristic draw prior (uncalibrated)"
     },
-    "actual": null
+    "actual": "home",
+    "final_score": "1-4"
   },
   {
     "id": "Soccer \u2014 UCL|401915305",
@@ -4681,7 +4685,8 @@
       "away": 0.3436,
       "method": "Elo + heuristic draw prior (uncalibrated)"
     },
-    "actual": null
+    "actual": "away",
+    "final_score": "9-1"
   },
   {
     "id": "Soccer \u2014 UCL|401915303",
@@ -4703,7 +4708,8 @@
       "away": 0.3245,
       "method": "Elo + heuristic draw prior (uncalibrated)"
     },
-    "actual": null
+    "actual": "away",
+    "final_score": "2-1"
   },
   {
     "id": "Soccer \u2014 UCL|401915306",
@@ -4725,7 +4731,8 @@
       "away": 0.3449,
       "method": "Elo + heuristic draw prior (uncalibrated)"
     },
-    "actual": null
+    "actual": "away",
+    "final_score": "3-2"
   },
   {
     "id": "Soccer \u2014 UCL|401915381",
@@ -4747,7 +4754,8 @@
       "away": 0.3243,
       "method": "Elo + heuristic draw prior (uncalibrated)"
     },
-    "actual": null
+    "actual": "away",
+    "final_score": "2-1"
   },
   {
     "id": "Soccer \u2014 UCL|401915302",
@@ -4769,7 +4777,8 @@
       "away": 0.3232,
       "method": "Elo + heuristic draw prior (uncalibrated)"
     },
-    "actual": null
+    "actual": "home",
+    "final_score": "1-4"
   },
   {
     "id": "NFL|401873037",
