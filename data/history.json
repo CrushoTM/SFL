@@ -4386,7 +4386,8 @@
       "away": 0.3119,
       "method": "Elo + heuristic draw prior (uncalibrated)"
     },
-    "actual": null
+    "actual": "home",
+    "final_score": "0-2"
   },
   {
     "id": "Soccer \u2014 UCL|401915310",
@@ -4408,7 +4409,8 @@
       "away": 0.3219,
       "method": "Elo + heuristic draw prior (uncalibrated)"
     },
-    "actual": null
+    "actual": "away",
+    "final_score": "1-0"
   },
   {
     "id": "Soccer \u2014 UCL|401915386",
@@ -4430,7 +4432,8 @@
       "away": 0.3219,
       "method": "Elo + heuristic draw prior (uncalibrated)"
     },
-    "actual": null
+    "actual": "away",
+    "final_score": "2-0"
   },
   {
     "id": "Soccer \u2014 UCL|401915387",
@@ -4452,7 +4455,8 @@
       "away": 0.3411,
       "method": "Elo + heuristic draw prior (uncalibrated)"
     },
-    "actual": null
+    "actual": "home",
+    "final_score": "0-3"
   },
   {
     "id": "Soccer \u2014 UCL|401915384",
@@ -4474,7 +4478,8 @@
       "away": 0.3202,
       "method": "Elo + heuristic draw prior (uncalibrated)"
     },
-    "actual": null
+    "actual": "draw",
+    "final_score": "0-0"
   },
   {
     "id": "Soccer \u2014 UCL|401915307",
@@ -4496,7 +4501,8 @@
       "away": 0.3385,
       "method": "Elo + heuristic draw prior (uncalibrated)"
     },
-    "actual": null
+    "actual": "away",
+    "final_score": "3-0"
   },
   {
     "id": "Soccer \u2014 UCL|401915385",
@@ -4518,7 +4524,8 @@
       "away": 0.3038,
       "method": "Elo + heuristic draw prior (uncalibrated)"
     },
-    "actual": null
+    "actual": "home",
+    "final_score": "0-4"
   },
   {
     "id": "Soccer \u2014 UCL|401915308",
@@ -4540,7 +4547,8 @@
       "away": 0.3449,
       "method": "Elo + heuristic draw prior (uncalibrated)"
     },
-    "actual": null
+    "actual": "home",
+    "final_score": "2-3"
   },
   {
     "id": "Soccer \u2014 UCL|401915309",
@@ -4562,7 +4570,8 @@
       "away": 0.3398,
       "method": "Elo + heuristic draw prior (uncalibrated)"
     },
-    "actual": null
+    "actual": "away",
+    "final_score": "6-0"
   },
   {
     "id": "Soccer \u2014 UCL|401915383",
