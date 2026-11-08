@@ -5398,7 +5398,8 @@
       "away": 0.3197,
       "method": "Elo + heuristic draw prior (uncalibrated)"
     },
-    "actual": null
+    "actual": "away",
+    "final_score": "2-0"
   },
   {
     "id": "Soccer \u2014 EPL|401879244",
@@ -5420,7 +5421,8 @@
       "away": 0.3328,
       "method": "Elo + heuristic draw prior (uncalibrated)"
     },
-    "actual": null
+    "actual": "home",
+    "final_score": "0-2"
   },
   {
     "id": "Soccer \u2014 EPL|401879243",
@@ -5442,7 +5444,8 @@
       "away": 0.3516,
       "method": "Elo + heuristic draw prior (uncalibrated)"
     },
-    "actual": null
+    "actual": "away",
+    "final_score": "3-1"
   },
   {
     "id": "Soccer \u2014 EPL|401878759",
@@ -5464,7 +5467,8 @@
       "away": 0.3452,
       "method": "Elo + heuristic draw prior (uncalibrated)"
     },
-    "actual": null
+    "actual": "away",
+    "final_score": "2-1"
   },
   {
     "id": "Soccer \u2014 EPL|401879239",
@@ -5486,7 +5490,8 @@
       "away": 0.3313,
       "method": "Elo + heuristic draw prior (uncalibrated)"
     },
-    "actual": null
+    "actual": "home",
+    "final_score": "0-1"
   },
   {
     "id": "NFL|401873038",
