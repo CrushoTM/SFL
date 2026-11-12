@@ -6237,5 +6237,71 @@
       "method": "Elo baseline (uncalibrated)"
     },
     "actual": null
+  },
+  {
+    "id": "Soccer \u2014 MLS|401933535",
+    "api_id": "401933535",
+    "league": "Soccer \u2014 MLS",
+    "date": "2026-11-20T00:30Z",
+    "home": "Orlando City SC",
+    "away": "FC Cincinnati",
+    "home_id": "12011",
+    "away_id": "18267",
+    "home_score": 0,
+    "away_score": 0,
+    "state": "pre",
+    "status": "Scheduled",
+    "forecast_created": "2026-11-12T00:49:42.928447+00:00",
+    "probabilities": {
+      "home": 0.4328,
+      "draw": 0.2432,
+      "away": 0.324,
+      "method": "Elo + heuristic draw prior (uncalibrated)"
+    },
+    "actual": null
+  },
+  {
+    "id": "NFL|401873066",
+    "api_id": "401873066",
+    "league": "NFL",
+    "date": "2026-11-20T01:15Z",
+    "home": "Houston Texans",
+    "away": "Indianapolis Colts",
+    "home_id": "34",
+    "away_id": "11",
+    "home_score": 0,
+    "away_score": 0,
+    "state": "pre",
+    "status": "Scheduled",
+    "forecast_created": "2026-11-12T00:49:42.928447+00:00",
+    "probabilities": {
+      "home": 0.6638,
+      "draw": 0.0,
+      "away": 0.3362,
+      "method": "Elo baseline (uncalibrated)"
+    },
+    "actual": null
+  },
+  {
+    "id": "Soccer \u2014 MLS|401933555",
+    "api_id": "401933555",
+    "league": "Soccer \u2014 MLS",
+    "date": "2026-11-20T03:00Z",
+    "home": "Seattle Sounders FC",
+    "away": "Real Salt Lake",
+    "home_id": "9726",
+    "away_id": "4771",
+    "home_score": 0,
+    "away_score": 0,
+    "state": "pre",
+    "status": "Scheduled",
+    "forecast_created": "2026-11-12T00:49:42.928447+00:00",
+    "probabilities": {
+      "home": 0.4266,
+      "draw": 0.2448,
+      "away": 0.3286,
+      "method": "Elo + heuristic draw prior (uncalibrated)"
+    },
+    "actual": null
   }
 ]
