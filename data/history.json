@@ -5950,7 +5950,8 @@
       "away": 0.4226,
       "method": "Elo baseline (uncalibrated)"
     },
-    "actual": null
+    "actual": "away",
+    "final_score": "24-21"
   },
   {
     "id": "NFL|401873053",
