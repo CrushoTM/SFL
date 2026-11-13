@@ -6303,5 +6303,27 @@
       "method": "Elo + heuristic draw prior (uncalibrated)"
     },
     "actual": null
+  },
+  {
+    "id": "Soccer \u2014 LaLiga|401882805",
+    "api_id": "401882805",
+    "league": "Soccer \u2014 LaLiga",
+    "date": "2026-11-20T20:00Z",
+    "home": "Athletic Club",
+    "away": "Espanyol",
+    "home_id": "93",
+    "away_id": "88",
+    "home_score": 0,
+    "away_score": 0,
+    "state": "pre",
+    "status": "Scheduled",
+    "forecast_created": "2026-11-13T01:11:42.595125+00:00",
+    "probabilities": {
+      "home": 0.4446,
+      "draw": 0.2401,
+      "away": 0.3153,
+      "method": "Elo + heuristic draw prior (uncalibrated)"
+    },
+    "actual": null
   }
 ]
