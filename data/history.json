@@ -5973,7 +5973,8 @@
       "away": 0.4386,
       "method": "Elo baseline (uncalibrated)"
     },
-    "actual": null
+    "actual": "home",
+    "final_score": "10-35"
   },
   {
     "id": "NFL|401873058",
@@ -5995,7 +5996,8 @@
       "away": 0.4387,
       "method": "Elo baseline (uncalibrated)"
     },
-    "actual": null
+    "actual": "away",
+    "final_score": "35-13"
   },
   {
     "id": "NFL|401873056",
@@ -6017,7 +6019,8 @@
       "away": 0.4593,
       "method": "Elo baseline (uncalibrated)"
     },
-    "actual": null
+    "actual": "home",
+    "final_score": "24-27"
   },
   {
     "id": "NFL|401873060",
@@ -6039,7 +6042,8 @@
       "away": 0.3789,
       "method": "Elo baseline (uncalibrated)"
     },
-    "actual": null
+    "actual": "away",
+    "final_score": "30-10"
   },
   {
     "id": "NFL|401873057",
@@ -6061,7 +6065,8 @@
       "away": 0.5246,
       "method": "Elo baseline (uncalibrated)"
     },
-    "actual": null
+    "actual": "away",
+    "final_score": "40-23"
   },
   {
     "id": "NFL|401873059",
@@ -6083,7 +6088,8 @@
       "away": 0.4286,
       "method": "Elo baseline (uncalibrated)"
     },
-    "actual": null
+    "actual": "home",
+    "final_score": "22-24"
   },
   {
     "id": "NFL|401873055",
@@ -6105,7 +6111,8 @@
       "away": 0.3988,
       "method": "Elo baseline (uncalibrated)"
     },
-    "actual": null
+    "actual": "away",
+    "final_score": "20-17"
   },
   {
     "id": "NFL|401873054",
@@ -6127,7 +6134,8 @@
       "away": 0.4904,
       "method": "Elo baseline (uncalibrated)"
     },
-    "actual": null
+    "actual": "away",
+    "final_score": "31-12"
   },
   {
     "id": "NFL|401873062",
