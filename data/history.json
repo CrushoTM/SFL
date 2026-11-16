@@ -6157,7 +6157,8 @@
       "away": 0.3592,
       "method": "Elo baseline (uncalibrated)"
     },
-    "actual": null
+    "actual": "away",
+    "final_score": "21-13"
   },
   {
     "id": "NFL|401873061",
@@ -6179,7 +6180,8 @@
       "away": 0.435,
       "method": "Elo baseline (uncalibrated)"
     },
-    "actual": null
+    "actual": "away",
+    "final_score": "34-6"
   },
   {
     "id": "NFL|401873063",
@@ -6201,7 +6203,8 @@
       "away": 0.4528,
       "method": "Elo baseline (uncalibrated)"
     },
-    "actual": null
+    "actual": "away",
+    "final_score": "46-40"
   },
   {
     "id": "NFL|401873064",
@@ -6223,7 +6226,8 @@
       "away": 0.4315,
       "method": "Elo baseline (uncalibrated)"
     },
-    "actual": null
+    "actual": "home",
+    "final_score": "18-38"
   },
   {
     "id": "NFL|401873065",
@@ -7080,6 +7084,94 @@
       "draw": 0.2393,
       "away": 0.313,
       "method": "Elo + heuristic draw prior (uncalibrated)"
+    },
+    "actual": null
+  },
+  {
+    "id": "Soccer \u2014 EPL|401879237",
+    "api_id": "401879237",
+    "league": "Soccer \u2014 EPL",
+    "date": "2026-11-23T20:00Z",
+    "home": "Brentford",
+    "away": "Everton",
+    "home_id": "337",
+    "away_id": "368",
+    "home_score": 0,
+    "away_score": 0,
+    "state": "pre",
+    "status": "Scheduled",
+    "forecast_created": "2026-11-16T06:44:51.060981+00:00",
+    "probabilities": {
+      "home": 0.4096,
+      "draw": 0.2493,
+      "away": 0.3411,
+      "method": "Elo + heuristic draw prior (uncalibrated)"
+    },
+    "actual": null
+  },
+  {
+    "id": "Soccer \u2014 LaLiga|401882802",
+    "api_id": "401882802",
+    "league": "Soccer \u2014 LaLiga",
+    "date": "2026-11-23T20:00Z",
+    "home": "Levante",
+    "away": "Elche",
+    "home_id": "1538",
+    "away_id": "3751",
+    "home_score": 0,
+    "away_score": 0,
+    "state": "pre",
+    "status": "Scheduled",
+    "forecast_created": "2026-11-16T06:44:51.060981+00:00",
+    "probabilities": {
+      "home": 0.4493,
+      "draw": 0.2389,
+      "away": 0.3119,
+      "method": "Elo + heuristic draw prior (uncalibrated)"
+    },
+    "actual": null
+  },
+  {
+    "id": "Soccer \u2014 MLS|401933728",
+    "api_id": "401933728",
+    "league": "Soccer \u2014 MLS",
+    "date": "2026-11-24T01:00Z",
+    "home": "St. Louis CITY SC",
+    "away": "LAFC",
+    "home_id": "21812",
+    "away_id": "18966",
+    "home_score": 0,
+    "away_score": 0,
+    "state": "pre",
+    "status": "Scheduled",
+    "forecast_created": "2026-11-16T06:44:51.060981+00:00",
+    "probabilities": {
+      "home": 0.455,
+      "draw": 0.2374,
+      "away": 0.3076,
+      "method": "Elo + heuristic draw prior (uncalibrated)"
+    },
+    "actual": null
+  },
+  {
+    "id": "NFL|401873078",
+    "api_id": "401873078",
+    "league": "NFL",
+    "date": "2026-11-24T01:15Z",
+    "home": "Washington Commanders",
+    "away": "Cincinnati Bengals",
+    "home_id": "28",
+    "away_id": "4",
+    "home_score": 0,
+    "away_score": 0,
+    "state": "pre",
+    "status": "Scheduled",
+    "forecast_created": "2026-11-16T06:44:51.060981+00:00",
+    "probabilities": {
+      "home": 0.4923,
+      "draw": 0.0,
+      "away": 0.5077,
+      "method": "Elo baseline (uncalibrated)"
     },
     "actual": null
   }
