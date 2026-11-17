@@ -7174,5 +7174,225 @@
       "method": "Elo baseline (uncalibrated)"
     },
     "actual": null
+  },
+  {
+    "id": "Soccer \u2014 UCL|401915380",
+    "api_id": "401915380",
+    "league": "Soccer \u2014 UCL",
+    "date": "2026-11-24T17:45Z",
+    "home": "Bodo/Glimt",
+    "away": "LASK Linz",
+    "home_id": "2980",
+    "away_id": "4411",
+    "home_score": 0,
+    "away_score": 0,
+    "state": "pre",
+    "status": "Scheduled",
+    "forecast_created": "2026-11-17T02:58:32.686707+00:00",
+    "probabilities": {
+      "home": 0.4324,
+      "draw": 0.2433,
+      "away": 0.3243,
+      "method": "Elo + heuristic draw prior (uncalibrated)"
+    },
+    "actual": null
+  },
+  {
+    "id": "Soccer \u2014 UCL|401915300",
+    "api_id": "401915300",
+    "league": "Soccer \u2014 UCL",
+    "date": "2026-11-24T17:45Z",
+    "home": "Galatasaray",
+    "away": "Aston Villa",
+    "home_id": "432",
+    "away_id": "362",
+    "home_score": 0,
+    "away_score": 0,
+    "state": "pre",
+    "status": "Scheduled",
+    "forecast_created": "2026-11-17T02:58:32.686707+00:00",
+    "probabilities": {
+      "home": 0.4324,
+      "draw": 0.2433,
+      "away": 0.3243,
+      "method": "Elo + heuristic draw prior (uncalibrated)"
+    },
+    "actual": null
+  },
+  {
+    "id": "Soccer \u2014 UCL|401915295",
+    "api_id": "401915295",
+    "league": "Soccer \u2014 UCL",
+    "date": "2026-11-24T20:00Z",
+    "home": "Arsenal",
+    "away": "Borussia Dortmund",
+    "home_id": "359",
+    "away_id": "124",
+    "home_score": 0,
+    "away_score": 0,
+    "state": "pre",
+    "status": "Scheduled",
+    "forecast_created": "2026-11-17T02:58:32.686707+00:00",
+    "probabilities": {
+      "home": 0.4324,
+      "draw": 0.2433,
+      "away": 0.3243,
+      "method": "Elo + heuristic draw prior (uncalibrated)"
+    },
+    "actual": null
+  },
+  {
+    "id": "Soccer \u2014 UCL|401915296",
+    "api_id": "401915296",
+    "league": "Soccer \u2014 UCL",
+    "date": "2026-11-24T20:00Z",
+    "home": "Como",
+    "away": "AEK Athens",
+    "home_id": "2572",
+    "away_id": "887",
+    "home_score": 0,
+    "away_score": 0,
+    "state": "pre",
+    "status": "Scheduled",
+    "forecast_created": "2026-11-17T02:58:32.686707+00:00",
+    "probabilities": {
+      "home": 0.4324,
+      "draw": 0.2433,
+      "away": 0.3243,
+      "method": "Elo + heuristic draw prior (uncalibrated)"
+    },
+    "actual": null
+  },
+  {
+    "id": "Soccer \u2014 UCL|401915294",
+    "api_id": "401915294",
+    "league": "Soccer \u2014 UCL",
+    "date": "2026-11-24T20:00Z",
+    "home": "Feyenoord Rotterdam",
+    "away": "FC Porto",
+    "home_id": "142",
+    "away_id": "437",
+    "home_score": 0,
+    "away_score": 0,
+    "state": "pre",
+    "status": "Scheduled",
+    "forecast_created": "2026-11-17T02:58:32.686707+00:00",
+    "probabilities": {
+      "home": 0.4324,
+      "draw": 0.2433,
+      "away": 0.3243,
+      "method": "Elo + heuristic draw prior (uncalibrated)"
+    },
+    "actual": null
+  },
+  {
+    "id": "Soccer \u2014 UCL|401915379",
+    "api_id": "401915379",
+    "league": "Soccer \u2014 UCL",
+    "date": "2026-11-24T20:00Z",
+    "home": "Manchester City",
+    "away": "Napoli",
+    "home_id": "382",
+    "away_id": "114",
+    "home_score": 0,
+    "away_score": 0,
+    "state": "pre",
+    "status": "Scheduled",
+    "forecast_created": "2026-11-17T02:58:32.686707+00:00",
+    "probabilities": {
+      "home": 0.4324,
+      "draw": 0.2433,
+      "away": 0.3243,
+      "method": "Elo + heuristic draw prior (uncalibrated)"
+    },
+    "actual": null
+  },
+  {
+    "id": "Soccer \u2014 UCL|401915299",
+    "api_id": "401915299",
+    "league": "Soccer \u2014 UCL",
+    "date": "2026-11-24T20:00Z",
+    "home": "RB Leipzig",
+    "away": "Lens",
+    "home_id": "11420",
+    "away_id": "175",
+    "home_score": 0,
+    "away_score": 0,
+    "state": "pre",
+    "status": "Scheduled",
+    "forecast_created": "2026-11-17T02:58:32.686707+00:00",
+    "probabilities": {
+      "home": 0.4324,
+      "draw": 0.2433,
+      "away": 0.3243,
+      "method": "Elo + heuristic draw prior (uncalibrated)"
+    },
+    "actual": null
+  },
+  {
+    "id": "Soccer \u2014 UCL|401915298",
+    "api_id": "401915298",
+    "league": "Soccer \u2014 UCL",
+    "date": "2026-11-24T20:00Z",
+    "home": "Real Madrid",
+    "away": "PSV Eindhoven",
+    "home_id": "86",
+    "away_id": "148",
+    "home_score": 0,
+    "away_score": 0,
+    "state": "pre",
+    "status": "Scheduled",
+    "forecast_created": "2026-11-17T02:58:32.686707+00:00",
+    "probabilities": {
+      "home": 0.4324,
+      "draw": 0.2433,
+      "away": 0.3243,
+      "method": "Elo + heuristic draw prior (uncalibrated)"
+    },
+    "actual": null
+  },
+  {
+    "id": "Soccer \u2014 UCL|401915297",
+    "api_id": "401915297",
+    "league": "Soccer \u2014 UCL",
+    "date": "2026-11-24T20:00Z",
+    "home": "Slovan Bratislava",
+    "away": "Real Betis",
+    "home_id": "521",
+    "away_id": "244",
+    "home_score": 0,
+    "away_score": 0,
+    "state": "pre",
+    "status": "Scheduled",
+    "forecast_created": "2026-11-17T02:58:32.686707+00:00",
+    "probabilities": {
+      "home": 0.4324,
+      "draw": 0.2433,
+      "away": 0.3243,
+      "method": "Elo + heuristic draw prior (uncalibrated)"
+    },
+    "actual": null
+  },
+  {
+    "id": "Soccer \u2014 MLS|401933738",
+    "api_id": "401933738",
+    "league": "Soccer \u2014 MLS",
+    "date": "2026-11-25T03:00Z",
+    "home": "San Jose Earthquakes",
+    "away": "Houston Dynamo FC",
+    "home_id": "191",
+    "away_id": "6077",
+    "home_score": 0,
+    "away_score": 0,
+    "state": "pre",
+    "status": "Scheduled",
+    "forecast_created": "2026-11-17T02:58:32.686707+00:00",
+    "probabilities": {
+      "home": 0.4339,
+      "draw": 0.2429,
+      "away": 0.3232,
+      "method": "Elo + heuristic draw prior (uncalibrated)"
+    },
+    "actual": null
   }
 ]
