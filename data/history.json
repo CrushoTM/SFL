@@ -6249,7 +6249,8 @@
       "away": 0.4263,
       "method": "Elo baseline (uncalibrated)"
     },
-    "actual": null
+    "actual": "away",
+    "final_score": "23-20"
   },
   {
     "id": "Soccer \u2014 MLS|401933535",
