@@ -7615,5 +7615,71 @@
       "method": "Elo baseline (uncalibrated)"
     },
     "actual": null
+  },
+  {
+    "id": "NFL|401873081",
+    "api_id": "401873081",
+    "league": "NFL",
+    "date": "2026-11-26T18:00Z",
+    "home": "Detroit Lions",
+    "away": "Chicago Bears",
+    "home_id": "8",
+    "away_id": "3",
+    "home_score": 0,
+    "away_score": 0,
+    "state": "pre",
+    "status": "Scheduled",
+    "forecast_created": "2026-11-19T00:29:32.529400+00:00",
+    "probabilities": {
+      "home": 0.6183,
+      "draw": 0.0,
+      "away": 0.3817,
+      "method": "Elo baseline (uncalibrated)"
+    },
+    "actual": null
+  },
+  {
+    "id": "NFL|401873080",
+    "api_id": "401873080",
+    "league": "NFL",
+    "date": "2026-11-26T21:30Z",
+    "home": "Dallas Cowboys",
+    "away": "Philadelphia Eagles",
+    "home_id": "6",
+    "away_id": "21",
+    "home_score": 0,
+    "away_score": 0,
+    "state": "pre",
+    "status": "Scheduled",
+    "forecast_created": "2026-11-19T00:29:32.529400+00:00",
+    "probabilities": {
+      "home": 0.6049,
+      "draw": 0.0,
+      "away": 0.3951,
+      "method": "Elo baseline (uncalibrated)"
+    },
+    "actual": null
+  },
+  {
+    "id": "NFL|401873082",
+    "api_id": "401873082",
+    "league": "NFL",
+    "date": "2026-11-27T01:20Z",
+    "home": "Buffalo Bills",
+    "away": "Kansas City Chiefs",
+    "home_id": "2",
+    "away_id": "12",
+    "home_score": 0,
+    "away_score": 0,
+    "state": "pre",
+    "status": "Scheduled",
+    "forecast_created": "2026-11-19T00:29:32.529400+00:00",
+    "probabilities": {
+      "home": 0.5816,
+      "draw": 0.0,
+      "away": 0.4184,
+      "method": "Elo baseline (uncalibrated)"
+    },
+    "actual": null
   }
 ]
