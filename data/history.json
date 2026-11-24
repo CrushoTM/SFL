@@ -7192,7 +7192,8 @@
       "away": 0.3076,
       "method": "Elo + heuristic draw prior (uncalibrated)"
     },
-    "actual": null
+    "actual": "home",
+    "final_score": "2-3"
   },
   {
     "id": "NFL|401873078",
@@ -7214,7 +7215,8 @@
       "away": 0.5077,
       "method": "Elo baseline (uncalibrated)"
     },
-    "actual": null
+    "actual": "home",
+    "final_score": "20-22"
   },
   {
     "id": "Soccer \u2014 UCL|401915380",
