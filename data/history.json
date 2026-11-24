@@ -7146,7 +7146,8 @@
       "away": 0.3411,
       "method": "Elo + heuristic draw prior (uncalibrated)"
     },
-    "actual": null
+    "actual": "home",
+    "final_score": "0-4"
   },
   {
     "id": "Soccer \u2014 LaLiga|401882802",
@@ -7168,7 +7169,8 @@
       "away": 0.3119,
       "method": "Elo + heuristic draw prior (uncalibrated)"
     },
-    "actual": null
+    "actual": "draw",
+    "final_score": "1-1"
   },
   {
     "id": "Soccer \u2014 MLS|401933728",
@@ -8597,6 +8599,28 @@
       "draw": 0.0,
       "away": 0.4959,
       "method": "Elo baseline (uncalibrated)"
+    },
+    "actual": null
+  },
+  {
+    "id": "Soccer \u2014 EPL|401879221",
+    "api_id": "401879221",
+    "league": "Soccer \u2014 EPL",
+    "date": "2026-12-01T20:00Z",
+    "home": "Coventry City",
+    "away": "Ipswich Town",
+    "home_id": "388",
+    "away_id": "373",
+    "home_score": 0,
+    "away_score": 0,
+    "state": "pre",
+    "status": "Scheduled",
+    "forecast_created": "2026-11-24T02:56:41.370849+00:00",
+    "probabilities": {
+      "home": 0.4535,
+      "draw": 0.2378,
+      "away": 0.3087,
+      "method": "Elo + heuristic draw prior (uncalibrated)"
     },
     "actual": null
   }
