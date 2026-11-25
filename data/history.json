@@ -7468,7 +7468,8 @@
       "away": 0.3243,
       "method": "Elo + heuristic draw prior (uncalibrated)"
     },
-    "actual": null
+    "actual": "away",
+    "final_score": "4-1"
   },
   {
     "id": "Soccer \u2014 UCL|401915293",
@@ -7490,7 +7491,8 @@
       "away": 0.3243,
       "method": "Elo + heuristic draw prior (uncalibrated)"
     },
-    "actual": null
+    "actual": "away",
+    "final_score": "1-0"
   },
   {
     "id": "Soccer \u2014 UCL|401915291",
