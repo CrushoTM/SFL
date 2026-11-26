@@ -7514,7 +7514,8 @@
       "away": 0.3243,
       "method": "Elo + heuristic draw prior (uncalibrated)"
     },
-    "actual": null
+    "actual": "home",
+    "final_score": "0-2"
   },
   {
     "id": "Soccer \u2014 UCL|401915292",
@@ -7536,7 +7537,8 @@
       "away": 0.3243,
       "method": "Elo + heuristic draw prior (uncalibrated)"
     },
-    "actual": null
+    "actual": "away",
+    "final_score": "3-0"
   },
   {
     "id": "Soccer \u2014 UCL|401915376",
@@ -7558,7 +7560,8 @@
       "away": 0.3243,
       "method": "Elo + heuristic draw prior (uncalibrated)"
     },
-    "actual": null
+    "actual": "home",
+    "final_score": "0-2"
   },
   {
     "id": "Soccer \u2014 UCL|401915377",
@@ -7580,7 +7583,8 @@
       "away": 0.3243,
       "method": "Elo + heuristic draw prior (uncalibrated)"
     },
-    "actual": null
+    "actual": "home",
+    "final_score": "1-2"
   },
   {
     "id": "Soccer \u2014 UCL|401915374",
@@ -7602,7 +7606,8 @@
       "away": 0.3243,
       "method": "Elo + heuristic draw prior (uncalibrated)"
     },
-    "actual": null
+    "actual": "draw",
+    "final_score": "2-2"
   },
   {
     "id": "Soccer \u2014 UCL|401915375",
@@ -7624,7 +7629,8 @@
       "away": 0.3243,
       "method": "Elo + heuristic draw prior (uncalibrated)"
     },
-    "actual": null
+    "actual": "away",
+    "final_score": "1-0"
   },
   {
     "id": "Soccer \u2014 UCL|401915373",
@@ -7646,7 +7652,8 @@
       "away": 0.3243,
       "method": "Elo + heuristic draw prior (uncalibrated)"
     },
-    "actual": null
+    "actual": "draw",
+    "final_score": "2-2"
   },
   {
     "id": "NFL|401873079",
@@ -9031,6 +9038,50 @@
       "draw": 0.2433,
       "away": 0.3243,
       "method": "Elo + heuristic draw prior (uncalibrated)"
+    },
+    "actual": null
+  },
+  {
+    "id": "Soccer \u2014 EPL|401878749",
+    "api_id": "401878749",
+    "league": "Soccer \u2014 EPL",
+    "date": "2026-12-03T20:00Z",
+    "home": "Tottenham Hotspur",
+    "away": "Fulham",
+    "home_id": "367",
+    "away_id": "370",
+    "home_score": 0,
+    "away_score": 0,
+    "state": "pre",
+    "status": "Scheduled",
+    "forecast_created": "2026-11-26T04:12:18.001539+00:00",
+    "probabilities": {
+      "home": 0.4422,
+      "draw": 0.2407,
+      "away": 0.317,
+      "method": "Elo + heuristic draw prior (uncalibrated)"
+    },
+    "actual": null
+  },
+  {
+    "id": "NFL|401873096",
+    "api_id": "401873096",
+    "league": "NFL",
+    "date": "2026-12-04T01:15Z",
+    "home": "Los Angeles Rams",
+    "away": "Kansas City Chiefs",
+    "home_id": "14",
+    "away_id": "12",
+    "home_score": 0,
+    "away_score": 0,
+    "state": "pre",
+    "status": "Scheduled",
+    "forecast_created": "2026-11-26T04:12:18.001539+00:00",
+    "probabilities": {
+      "home": 0.5464,
+      "draw": 0.0,
+      "away": 0.4536,
+      "method": "Elo baseline (uncalibrated)"
     },
     "actual": null
   }
