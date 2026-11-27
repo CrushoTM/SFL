@@ -7721,7 +7721,8 @@
       "away": 0.3951,
       "method": "Elo baseline (uncalibrated)"
     },
-    "actual": null
+    "actual": "away",
+    "final_score": "39-38"
   },
   {
     "id": "NFL|401873082",
@@ -7743,7 +7744,8 @@
       "away": 0.4184,
       "method": "Elo baseline (uncalibrated)"
     },
-    "actual": null
+    "actual": "home",
+    "final_score": "10-13"
   },
   {
     "id": "NFL|401873083",
@@ -9084,6 +9086,28 @@
       "draw": 0.0,
       "away": 0.4536,
       "method": "Elo baseline (uncalibrated)"
+    },
+    "actual": null
+  },
+  {
+    "id": "Soccer \u2014 LaLiga|401882786",
+    "api_id": "401882786",
+    "league": "Soccer \u2014 LaLiga",
+    "date": "2026-12-04T20:00Z",
+    "home": "Alav\u00e9s",
+    "away": "Espanyol",
+    "home_id": "96",
+    "away_id": "88",
+    "home_score": 0,
+    "away_score": 0,
+    "state": "pre",
+    "status": "Scheduled",
+    "forecast_created": "2026-11-27T08:45:57.419573+00:00",
+    "probabilities": {
+      "home": 0.431,
+      "draw": 0.2437,
+      "away": 0.3254,
+      "method": "Elo + heuristic draw prior (uncalibrated)"
     },
     "actual": null
   }
