@@ -7882,7 +7882,8 @@
       "away": 0.3243,
       "method": "Elo + heuristic draw prior (uncalibrated)"
     },
-    "actual": null
+    "actual": "away",
+    "final_score": "1-0"
   },
   {
     "id": "Soccer \u2014 EPL|401879227",
@@ -7904,7 +7905,8 @@
       "away": 0.3243,
       "method": "Elo + heuristic draw prior (uncalibrated)"
     },
-    "actual": null
+    "actual": "home",
+    "final_score": "0-3"
   },
   {
     "id": "Soccer \u2014 EPL|401879226",
@@ -7926,7 +7928,8 @@
       "away": 0.3243,
       "method": "Elo + heuristic draw prior (uncalibrated)"
     },
-    "actual": null
+    "actual": "away",
+    "final_score": "4-0"
   },
   {
     "id": "Soccer \u2014 LaLiga|401882790",
@@ -7948,7 +7951,8 @@
       "away": 0.3148,
       "method": "Elo + heuristic draw prior (uncalibrated)"
     },
-    "actual": null
+    "actual": "away",
+    "final_score": "4-3"
   },
   {
     "id": "Soccer \u2014 EPL|401878752",
@@ -7970,7 +7974,8 @@
       "away": 0.3243,
       "method": "Elo + heuristic draw prior (uncalibrated)"
     },
-    "actual": null
+    "actual": "draw",
+    "final_score": "2-2"
   },
   {
     "id": "Soccer \u2014 LaLiga|401882793",
@@ -7992,7 +7997,8 @@
       "away": 0.3243,
       "method": "Elo + heuristic draw prior (uncalibrated)"
     },
-    "actual": null
+    "actual": "away",
+    "final_score": "3-2"
   },
   {
     "id": "Soccer \u2014 MLS|401933737",
@@ -8014,7 +8020,8 @@
       "away": 0.3243,
       "method": "Elo + heuristic draw prior (uncalibrated)"
     },
-    "actual": null
+    "actual": "home",
+    "final_score": "1-2"
   },
   {
     "id": "Soccer \u2014 MLS|401933724",
@@ -8036,7 +8043,8 @@
       "away": 0.3243,
       "method": "Elo + heuristic draw prior (uncalibrated)"
     },
-    "actual": null
+    "actual": "home",
+    "final_score": "2-3"
   },
   {
     "id": "Soccer \u2014 LaLiga|401882789",
@@ -8939,7 +8947,8 @@
       "away": 0.3433,
       "method": "Elo + heuristic draw prior (uncalibrated)"
     },
-    "actual": null
+    "actual": "draw",
+    "final_score": "0-0"
   },
   {
     "id": "Soccer \u2014 MLS|401933716",
