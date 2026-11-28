@@ -7767,7 +7767,8 @@
       "away": 0.4874,
       "method": "Elo baseline (uncalibrated)"
     },
-    "actual": null
+    "actual": "home",
+    "final_score": "5-27"
   },
   {
     "id": "Soccer \u2014 EPL|401879225",
@@ -7789,7 +7790,8 @@
       "away": 0.3171,
       "method": "Elo + heuristic draw prior (uncalibrated)"
     },
-    "actual": null
+    "actual": "home",
+    "final_score": "2-3"
   },
   {
     "id": "Soccer \u2014 LaLiga|401882791",
@@ -7811,7 +7813,8 @@
       "away": 0.3231,
       "method": "Elo + heuristic draw prior (uncalibrated)"
     },
-    "actual": null
+    "actual": "away",
+    "final_score": "3-1"
   },
   {
     "id": "Soccer \u2014 MLS|401933727",
@@ -9107,6 +9110,248 @@
       "home": 0.431,
       "draw": 0.2437,
       "away": 0.3254,
+      "method": "Elo + heuristic draw prior (uncalibrated)"
+    },
+    "actual": null
+  },
+  {
+    "id": "Soccer \u2014 EPL|401879213",
+    "api_id": "401879213",
+    "league": "Soccer \u2014 EPL",
+    "date": "2026-12-05T12:30Z",
+    "home": "Chelsea",
+    "away": "Liverpool",
+    "home_id": "363",
+    "away_id": "364",
+    "home_score": 0,
+    "away_score": 0,
+    "state": "pre",
+    "status": "Scheduled",
+    "forecast_created": "2026-11-28T02:46:07.624007+00:00",
+    "probabilities": {
+      "home": 0.3905,
+      "draw": 0.2544,
+      "away": 0.355,
+      "method": "Elo + heuristic draw prior (uncalibrated)"
+    },
+    "actual": null
+  },
+  {
+    "id": "Soccer \u2014 LaLiga|401882780",
+    "api_id": "401882780",
+    "league": "Soccer \u2014 LaLiga",
+    "date": "2026-12-05T13:00Z",
+    "home": "Racing Santander",
+    "away": "Deportivo",
+    "home_id": "87",
+    "away_id": "90",
+    "home_score": 0,
+    "away_score": 0,
+    "state": "pre",
+    "status": "Scheduled",
+    "forecast_created": "2026-11-28T02:46:07.624007+00:00",
+    "probabilities": {
+      "home": 0.4683,
+      "draw": 0.2339,
+      "away": 0.2977,
+      "method": "Elo + heuristic draw prior (uncalibrated)"
+    },
+    "actual": null
+  },
+  {
+    "id": "Soccer \u2014 EPL|401879216",
+    "api_id": "401879216",
+    "league": "Soccer \u2014 EPL",
+    "date": "2026-12-05T15:00Z",
+    "home": "AFC Bournemouth",
+    "away": "Hull City",
+    "home_id": "349",
+    "away_id": "306",
+    "home_score": 0,
+    "away_score": 0,
+    "state": "pre",
+    "status": "Scheduled",
+    "forecast_created": "2026-11-28T02:46:07.624007+00:00",
+    "probabilities": {
+      "home": 0.4324,
+      "draw": 0.2433,
+      "away": 0.3243,
+      "method": "Elo + heuristic draw prior (uncalibrated)"
+    },
+    "actual": null
+  },
+  {
+    "id": "Soccer \u2014 EPL|401879215",
+    "api_id": "401879215",
+    "league": "Soccer \u2014 EPL",
+    "date": "2026-12-05T15:00Z",
+    "home": "Aston Villa",
+    "away": "Crystal Palace",
+    "home_id": "362",
+    "away_id": "384",
+    "home_score": 0,
+    "away_score": 0,
+    "state": "pre",
+    "status": "Scheduled",
+    "forecast_created": "2026-11-28T02:46:07.624007+00:00",
+    "probabilities": {
+      "home": 0.4405,
+      "draw": 0.2412,
+      "away": 0.3183,
+      "method": "Elo + heuristic draw prior (uncalibrated)"
+    },
+    "actual": null
+  },
+  {
+    "id": "Soccer \u2014 EPL|401879211",
+    "api_id": "401879211",
+    "league": "Soccer \u2014 EPL",
+    "date": "2026-12-05T15:00Z",
+    "home": "Leeds United",
+    "away": "Ipswich Town",
+    "home_id": "357",
+    "away_id": "373",
+    "home_score": 0,
+    "away_score": 0,
+    "state": "pre",
+    "status": "Scheduled",
+    "forecast_created": "2026-11-28T02:46:07.624007+00:00",
+    "probabilities": {
+      "home": 0.4614,
+      "draw": 0.2357,
+      "away": 0.3029,
+      "method": "Elo + heuristic draw prior (uncalibrated)"
+    },
+    "actual": null
+  },
+  {
+    "id": "Soccer \u2014 EPL|401879210",
+    "api_id": "401879210",
+    "league": "Soccer \u2014 EPL",
+    "date": "2026-12-05T15:00Z",
+    "home": "Manchester United",
+    "away": "Coventry City",
+    "home_id": "360",
+    "away_id": "388",
+    "home_score": 0,
+    "away_score": 0,
+    "state": "pre",
+    "status": "Scheduled",
+    "forecast_created": "2026-11-28T02:46:07.624007+00:00",
+    "probabilities": {
+      "home": 0.4079,
+      "draw": 0.2498,
+      "away": 0.3424,
+      "method": "Elo + heuristic draw prior (uncalibrated)"
+    },
+    "actual": null
+  },
+  {
+    "id": "Soccer \u2014 LaLiga|401882779",
+    "api_id": "401882779",
+    "league": "Soccer \u2014 LaLiga",
+    "date": "2026-12-05T15:15Z",
+    "home": "Rayo Vallecano",
+    "away": "Levante",
+    "home_id": "101",
+    "away_id": "1538",
+    "home_score": 0,
+    "away_score": 0,
+    "state": "pre",
+    "status": "Scheduled",
+    "forecast_created": "2026-11-28T02:46:07.624007+00:00",
+    "probabilities": {
+      "home": 0.436,
+      "draw": 0.2423,
+      "away": 0.3216,
+      "method": "Elo + heuristic draw prior (uncalibrated)"
+    },
+    "actual": null
+  },
+  {
+    "id": "Soccer \u2014 EPL|401878747",
+    "api_id": "401878747",
+    "league": "Soccer \u2014 EPL",
+    "date": "2026-12-05T17:30Z",
+    "home": "Nottingham Forest",
+    "away": "Brighton & Hove Albion",
+    "home_id": "393",
+    "away_id": "331",
+    "home_score": 0,
+    "away_score": 0,
+    "state": "pre",
+    "status": "Scheduled",
+    "forecast_created": "2026-11-28T02:46:07.624007+00:00",
+    "probabilities": {
+      "home": 0.442,
+      "draw": 0.2408,
+      "away": 0.3173,
+      "method": "Elo + heuristic draw prior (uncalibrated)"
+    },
+    "actual": null
+  },
+  {
+    "id": "Soccer \u2014 LaLiga|401882777",
+    "api_id": "401882777",
+    "league": "Soccer \u2014 LaLiga",
+    "date": "2026-12-05T17:30Z",
+    "home": "Villarreal",
+    "away": "Real Sociedad",
+    "home_id": "102",
+    "away_id": "89",
+    "home_score": 0,
+    "away_score": 0,
+    "state": "pre",
+    "status": "Scheduled",
+    "forecast_created": "2026-11-28T02:46:07.624007+00:00",
+    "probabilities": {
+      "home": 0.4324,
+      "draw": 0.2433,
+      "away": 0.3243,
+      "method": "Elo + heuristic draw prior (uncalibrated)"
+    },
+    "actual": null
+  },
+  {
+    "id": "Soccer \u2014 EPL|401879214",
+    "api_id": "401879214",
+    "league": "Soccer \u2014 EPL",
+    "date": "2026-12-05T20:00Z",
+    "home": "Brentford",
+    "away": "Manchester City",
+    "home_id": "337",
+    "away_id": "382",
+    "home_score": 0,
+    "away_score": 0,
+    "state": "pre",
+    "status": "Scheduled",
+    "forecast_created": "2026-11-28T02:46:07.624007+00:00",
+    "probabilities": {
+      "home": 0.4489,
+      "draw": 0.239,
+      "away": 0.3121,
+      "method": "Elo + heuristic draw prior (uncalibrated)"
+    },
+    "actual": null
+  },
+  {
+    "id": "Soccer \u2014 LaLiga|401882783",
+    "api_id": "401882783",
+    "league": "Soccer \u2014 LaLiga",
+    "date": "2026-12-05T20:00Z",
+    "home": "Barcelona",
+    "away": "Celta Vigo",
+    "home_id": "83",
+    "away_id": "85",
+    "home_score": 0,
+    "away_score": 0,
+    "state": "pre",
+    "status": "Scheduled",
+    "forecast_created": "2026-11-28T02:46:07.624007+00:00",
+    "probabilities": {
+      "home": 0.4518,
+      "draw": 0.2382,
+      "away": 0.31,
       "method": "Elo + heuristic draw prior (uncalibrated)"
     },
     "actual": null
